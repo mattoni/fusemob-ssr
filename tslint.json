@@ -1,0 +1,27 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-react"
+  ],
+  "rules": {
+    "indent": [
+      true,
+      "spaces"
+    ],
+    "quotemark": [
+      true,
+      "double",
+      "jsx-double"
+    ],
+    "no-var-requires": false,
+    "object-literal-key-quotes": false,
+    "member-ordering": [
+      false
+    ],
+    "object-literal-sort-keys": false,
+    "jsx-alignment": [
+      false
+    ],
+    "jsx-wrap-multiline": true
+  }
+}
