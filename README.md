@@ -5,26 +5,26 @@ Utilizing the blazing bundling speed of FuseBox, this starter kit will have you 
 
 ## Toolset
 
-### Core
+#### Core
  - [Typescript 2](https://typescriptlang.org)
- - [React](https://github.com/facebook/react) & [React DOM](https://github.com/facebook/react) for views.
+ - [React](https://github.com/facebook/react) & [React DOM](https://github.com/facebook/react) for views
  - [MobX](https://github.com/mobxjs/mobx) & [MobX-React](https://github.com/mobxjs/mobx-react) for state management 
  
- ### Utilities
+ #### Utilities
  - [React Helmet](https://github.com/nfl/react-helmet) for managing the head tag
  - [TypeStyle, CSX, and CSSTips](http://typestyle.io/) for CSS in JS styling
 
- ### Build System
+ #### Build System
  - [FuseBox](http://fuse-box.org) for lightning fast HMR and bundling
 
- ### Dev & Prod Server
+ #### Dev & Prod Server
  - [Express](https://github.com/expressjs/express) for running server
 
- ### Dev Experience
+ #### Dev Experience
  - [tslint](https://github.com/palantir/tslint) for consistent linting of Typescript files
- - [Chalk](https://github.com/chalk/chalk) for colored terminal logs.
+ - [Chalk](https://github.com/chalk/chalk) for colored terminal logs
 
- ### Testing
+ #### Testing
  - Coming Soon.
 
 ## Installation
