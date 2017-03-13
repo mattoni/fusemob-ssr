@@ -9,7 +9,6 @@
         "outDir": "build",
         "module": "commonjs",
         "target": "es6",
-        "declaration": true,
         "sourceMap": true,
         "inlineSourceMap": false,
         "inlineSources": false,
@@ -23,7 +22,10 @@
         "noImplicitReturns": true,
         "noImplicitThis": true,
         "strictNullChecks": true,
-        "pretty": true
+        "pretty": true,
+        "typeRoots": [
+            "./typings"
+        ]
     },
     "include": [
         "./src/**/*"
