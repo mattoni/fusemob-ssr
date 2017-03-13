@@ -42,6 +42,10 @@ async function buildDev() {
 
     await bundleClient();
 
+    // setStatefulModules((name) => {
+    //     return name === "client";
+    // });
+
     watchTree("./src/server", build);
 }
 

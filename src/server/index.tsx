@@ -7,7 +7,6 @@ import { StaticRouter, StaticRouterContext } from "react-router-dom";
 import { App } from "../containers/App";
 import { Html } from "../containers/Html";
 
-
 const app = express();
 const host = process.env.HOST || "localhost";
 const port = 3000;
@@ -43,4 +42,5 @@ function renderHTML(markup: string) {
 
     return `<!doctype html> ${html}`;
 }
+
 
