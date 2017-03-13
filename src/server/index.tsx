@@ -1,15 +1,24 @@
 import * as Chalk from "chalk";
 import * as express from "express";
+import * as path from "path";
 
 const app = express();
 const host = process.env.HOST || "localhost";
 const port = 3000;
 
-app.get("*", (req, res) => {
+const statics = path.resolve("./build/public");
+app.use(express.static(statics));
+
+app.get("/", (req, res) => {
     const location = req.url;
     console.log("YOU ARE HERE: ", location);
     res.status(200).send(`
-        <!doctype html> <div>HELLO</div>
+        <!doctype html> 
+            <body> 
+                <div>HELLO</div> 
+                <script type="text/javascript" charset="utf-8" src="/js/bundle.js"></script>
+            </body>
+        </html>
     `);
 });
 
