@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { style } from "typestyle";
 
 const headerClass = style({
-    listStyleType: "none",
-    padding: 0,
     $nest: {
-        "&li": {
+        "& ul": {
+            listStyle: "none",
+            padding: 0,
+        },
+        "& li": {
             display: "inline",
             padding: px(5),
         },
@@ -15,10 +17,10 @@ const headerClass = style({
 });
 
 export const Header = () => (
-  <nav className={headerClass}>
-    <ul>
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="about">About</Link></li>
-    </ul>
-  </nav>
+    <nav className={headerClass}>
+        <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/about">About</Link></li>
+        </ul>
+    </nav>
 );

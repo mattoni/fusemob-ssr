@@ -1,9 +1,10 @@
-import { App } from "containers/App";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import { App } from "../containers/App";
+import { setStylesTarget } from "typestyle";
 
-console.log("CLIENT READY");
+setStylesTarget({textContent: "styles-target"});
 
 ReactDOM.render((
     <BrowserRouter>

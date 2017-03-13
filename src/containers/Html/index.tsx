@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as Helmet from "react-helmet";
+import { getStyles } from "typestyle";
 
 interface IHtmlProps {
     title?: string;
@@ -17,6 +18,10 @@ export class Html extends React.Component<IHtmlProps, undefined> {
             />
         );
 
+        const styles = (
+            <style id="styles-target">{getStyles()}</style>
+        );
+
         return (
             <html>
                 <head>
@@ -25,9 +30,11 @@ export class Html extends React.Component<IHtmlProps, undefined> {
                     {head.meta.toComponent()}
                     {head.link.toComponent()}
                     {head.script.toComponent()}
+                    {styles}
                 </head>
                 <body>
                     <main id="root" dangerouslySetInnerHTML={{ __html: markup }} />
+                    <script src="js/bundle.js" />
                     {initialState}
                 </body>
             </html>

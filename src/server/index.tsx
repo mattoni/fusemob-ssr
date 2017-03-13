@@ -1,11 +1,12 @@
 import * as Chalk from "chalk";
-import { App } from "containers/App";
-import { Html } from "containers/Html";
 import * as express from "express";
 import * as path from "path";
 import * as React from "react";
 import * as ReactDOMServer from "react-dom/server";
 import { StaticRouter, StaticRouterContext } from "react-router-dom";
+import { App } from "../containers/App";
+import { Html } from "../containers/Html";
+
 
 const app = express();
 const host = process.env.HOST || "localhost";
@@ -14,7 +15,7 @@ const port = 3000;
 const statics = path.resolve("./build/public");
 app.use(express.static(statics));
 
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
     const context: StaticRouterContext = {};
     const markup = ReactDOMServer.renderToString(
         <StaticRouter location={req.url} context={context}>
