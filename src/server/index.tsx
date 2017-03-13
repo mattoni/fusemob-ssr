@@ -6,6 +6,7 @@ import * as ReactDOMServer from "react-dom/server";
 import { StaticRouter, StaticRouterContext } from "react-router-dom";
 import { App } from "../containers/App";
 import { Html } from "../containers/Html";
+import {setStatefulModules} from "fuse-box/modules/fuse-hmr";
 
 const app = express();
 const host = process.env.HOST || "localhost";

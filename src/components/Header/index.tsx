@@ -12,6 +12,7 @@ const headerClass = style({
         "& li": {
             display: "inline",
             padding: px(5),
+            backgroundColor: "purple",
         },
     },
 });
