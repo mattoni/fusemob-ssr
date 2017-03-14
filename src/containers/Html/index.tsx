@@ -3,17 +3,18 @@ import * as Helmet from "react-helmet";
 import { getStyles } from "typestyle";
 
 interface IHtmlProps {
-    title?: string;
+    title: string;
     markup: string;
+    state: object;
 }
 
 export class Html extends React.Component<IHtmlProps, undefined> {
     public render() {
         const head = Helmet.rewind();
-        const { markup } = this.props;
+        const { markup, state } = this.props;
         const initialState = (
             <script
-                dangerouslySetInnerHTML={{ __html: `window.__INITIAL_STATE__=${JSON.stringify({})};` }}
+                dangerouslySetInnerHTML={{ __html: `window.__INITIAL_STATE__=${JSON.stringify(state)};` }}
                 charSet="UTF-8"
             />
         );

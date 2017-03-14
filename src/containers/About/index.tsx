@@ -7,6 +7,7 @@ const aboutClass = style({
 });
 
 export class About extends React.Component<{}, undefined> {
+
     public render() {
         return (
             <div className={aboutClass}>
