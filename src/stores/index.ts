@@ -1,43 +1,40 @@
 import "isomorphic-fetch";
 import { CurrencyStore } from "./currency";
-import { RoutingStore } from "./routing";
-
-type ISerializedState = {
-    [P in keyof IStores]: any;
-};
-
-let stores: IStores;
-
 /**
- * Available stores
+ * Available stores. Add new store definitions here
  */
 export interface IStores {
     currency: CurrencyStore;
-    routing: typeof RoutingStore;
+    [key: string]: {serialize: () => void, state: any};
 }
 
 /**
- * Get stores object. Either initialize to default or from serialized state.
+ * Serialized state has same keys as actual state
+ * No need to modify this.
  */
-export function hydrate(state: ISerializedState | undefined): IStores {
-    stores = {
-        currency: new CurrencyStore(state ? state.currency : undefined),
-        routing: RoutingStore,
-    };
-
-    return stores;
-}
+export type ISerializedState = {
+    [P in keyof IStores]?: IStores[P]["state"];
+};
 
 /**
- * Serialize state and export
+ * The master state class
  */
-export function dehydrate(): ISerializedState {
-    if (!stores) {
-        throw new Error("Stores have not been initialized. Cannot deserialize. Call hydrate() first");
+export class Store {
+    public readonly domains: IStores;
+
+    constructor(state?: ISerializedState) {
+        // Add new state domain initializations here
+        this.domains = {
+            currency: new CurrencyStore(state && state.currency),
+        };
     }
 
-    return {
-        currency: stores.currency.serialize(),
-        routing: undefined, // no state for routing
-    };
+    public serialize() {
+        const serialized: ISerializedState = {};
+        for (const i in this.domains) {
+            serialized[i] = this.domains[i].serialize();
+        }
+
+        return serialized;
+    }
 }

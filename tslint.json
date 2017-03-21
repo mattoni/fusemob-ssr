@@ -21,6 +21,7 @@
     "member-ordering": [
       false
     ],
+    "forin": false,
     "object-literal-sort-keys": false,
     "jsx-alignment": [
       false

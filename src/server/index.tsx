@@ -1,40 +1,25 @@
 import * as Chalk from "chalk";
 import * as express from "express";
-import { Provider } from "mobx-react";
 import * as path from "path";
-import * as React from "react";
-import * as ReactDOMServer from "react-dom/server";
-import { StaticRouter, StaticRouterContext } from "react-router-dom";
-import { App } from "../containers/App";
-import { Html } from "../containers/Html";
-import { hydrate } from "../stores";
-import { PromiseDefer } from "../utils/promise-defer";
+import { appMiddleware } from "./middleware";
 
 const app = express();
+
+// Basic settings
 const host = process.env.HOST || "localhost";
 const port = 3000;
 
+// Disable unnecessary headeers
+app.disable("x-powered-by");
+
+// Serve static files
 const statics = path.resolve("./build/public");
 app.use(express.static(statics));
 
-app.get("*", async (req, res) => {
-    const context: StaticRouterContext = {};
-    // init stores
-    const stores = hydrate(undefined);
-    const markup = ReactDOMServer.renderToString(
-        <StaticRouter location={req.url} context={context}>
-            <Provider profile={stores}>
-                <App />
-            </Provider>
-        </StaticRouter>,
-    );
+// Handle requests to pages
+app.get("*", appMiddleware);
 
-    // Wait for all async  ops to complete
-    await PromiseDefer.exec();
-
-    res.status(context.status || 200).send(renderHTML(markup));
-});
-
+// Start server
 app.listen(port, host, (err: any) => {
     if (err) {
         console.error(Chalk.bgRed(err));
@@ -45,12 +30,5 @@ app.listen(port, host, (err: any) => {
     }
 });
 
-function renderHTML(markup: string) {
-    const html = ReactDOMServer.renderToString(
-        <Html markup={markup} />,
-    );
-
-    return `<!doctype html> ${html}`;
-}
 
 

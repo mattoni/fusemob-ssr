@@ -1,23 +1,29 @@
-type ILoader = () => Promise<void>;
+import { IRouteConfig } from "react-router-config";
+import { About } from "../containers/About";
+import { App } from "../containers/App";
+import { Home } from "../containers/Home";
 
-/**
- * Keeps track of promises issued to load a container.
- * Used in server response deferment - waits until all resolve
- * before sending response
- */
+interface IRouteComponent extends React.ComponentClass<any> {
+    load: () => Promise<any>;
+}
+
+interface IRoutes extends IRouteConfig {
+    component: IRouteComponent;
+}
+
 export class RoutingStore {
-    private static loaders: ILoader[] = [];
-
-    public static registerLoader(func: ILoader) {
-        if (typeof document === "undefined") {
-            this.loaders.push(func);
-            return;
-        }
-
-        func();
-    }
-
-    public static execLoaders() {
-        return Promise.all(this.loaders).then(() => this.loaders = []);
-    }
+    public static routes: IRoutes[] = [{
+        component: App,
+        routes: [
+            {
+                path: "/",
+                exact: true,
+                component: Home,
+            },
+            {
+                path: "/about",
+                component: About,
+            },
+        ],
+    }];
 }

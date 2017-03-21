@@ -3,14 +3,16 @@ import { Provider } from "mobx-react";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import { App } from "../containers/App";
-import { hydrate } from "../stores";
+import { initStores } from "../stores";
+import { renderRoutes } from "react-router-config";
 import "./styles";
+
+const stores = initStores(undefined);
 
 ReactDOM.render((
     <BrowserRouter>
-        <Provider profile={hydrate((window as any).__INITIAL_STATE__)}>
-            <App />
+        <Provider profile={initStores((window as any).__INITIAL_STATE__)}>
+            {renderRoutes(stores.routing.routes)}
         </Provider>
     </BrowserRouter>
 ), document.getElementById("root"));

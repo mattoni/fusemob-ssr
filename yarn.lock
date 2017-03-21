@@ -636,9 +636,9 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
 
-fuse-box@^1.3.127:
-  version "1.3.127"
-  resolved "https://registry.yarnpkg.com/fuse-box/-/fuse-box-1.3.127.tgz#d999fcbc8848894fba993d58521fd6967098803e"
+fuse-box@^1.3.128:
+  version "1.3.128"
+  resolved "https://registry.yarnpkg.com/fuse-box/-/fuse-box-1.3.128.tgz#5397e97037f7fbff4a706fe571a7d3b48f2d24c6"
   dependencies:
     acorn "^4.0.3"
     acorn-es7 "^0.1.0"
@@ -1310,6 +1310,12 @@ rc@^1.0.1, rc@^1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-async-component@next:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-async-component/-/react-async-component-0.2.2.tgz#243e7551673e749fe7b90e2d8b675d3612c97a2a"
+  dependencies:
+    react-tree-walker "^1.0.0"
+
 react-dom@^15.4.2:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.4.2.tgz#015363f05b0a1fd52ae9efdd3a0060d90695208f"
@@ -1349,6 +1355,10 @@ react-side-effect@^1.1.0:
   dependencies:
     exenv "^1.2.1"
     shallowequal "^0.2.2"
+
+react-tree-walker@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-tree-walker/-/react-tree-walker-1.0.0.tgz#061f719232a5b77b01fbab21b8ee6a3ab7be7085"
 
 react@^15.4.2:
   version "15.4.2"

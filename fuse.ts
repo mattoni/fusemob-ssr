@@ -91,7 +91,7 @@ function bundleServer() {
             isProd && UglifyJSPlugin(undefined),
         ],
         sourcemaps: true,
-    }).bundle(">server/index.tsx", res));
+    }).bundle(">[server/index.tsx]", res));
 }
 
 // function bundleVendor() {
