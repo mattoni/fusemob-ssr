@@ -1,29 +1,25 @@
 import * as React from "react";
-import * as Helmet from "react-helmet";
-import { Route } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { Route, Switch } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { NotFound } from "../../components/Routing";
-// import { About } from "../../containers/About";
+
+import { AsyncAbout } from "../../containers/About";
 // import { Currency } from "../../containers/Currency";
-// import { Home } from "../../containers/Home";
-import { renderRoutes, IRouteConfig } from "react-router-config";
+import { Home } from "../../containers/Home";
 
-interface IRoutesProps {
-    route: IRouteConfig;
-}
+export const App = () => (
+    <section>
+        <Helmet>
+            <title>FuseMob SSR</title>
+        </Helmet>
 
-export class App extends React.Component<IRoutesProps, {}> {
-    public static async load() {
-        //
-    }
+        <Header />
 
-    public render() {
-        return (
-            <section>
-                <Helmet title="FuseMob-SSR"/>
-                <Header />
-                {renderRoutes(this.props.route.routes)}
-            </section>
-        );
-    }
-}
+        <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/about" component={AsyncAbout} />
+            <Route component={NotFound} />
+        </Switch>
+    </section>
+);

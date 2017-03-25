@@ -1,31 +1,32 @@
 {
-  "extends": [
-    "tslint:latest",
-    "tslint-react"
-  ],
-  "rules": {
-    "indent": [
-      true,
-      "spaces"
+    "extends": [
+        "tslint:latest",
+        "tslint-react"
     ],
-    "quotemark": [
-      true,
-      "double",
-      "jsx-double"
-    ],
-    "no-var-requires": false,
-    "no-console": [
-        "assert"
-    ],
-    "object-literal-key-quotes": false,
-    "member-ordering": [
-      false
-    ],
-    "forin": false,
-    "object-literal-sort-keys": false,
-    "jsx-alignment": [
-      false
-    ],
-    "jsx-wrap-multiline": true
-  }
+    "rules": {
+        "indent": [
+            true,
+            "spaces"
+        ],
+        "quotemark": [
+            true,
+            "double",
+            "jsx-double"
+        ],
+        "no-var-requires": false,
+        "no-console": [
+            "assert"
+        ],
+        "object-literal-key-quotes": false,
+        "member-ordering": [
+            false
+        ],
+        "forin": false,
+        "object-literal-sort-keys": false,
+        "jsx-alignment": [
+            false
+        ],
+        "jsx-wrap-multiline": true,
+        "jsx-boolean-value": false
+    }
 }

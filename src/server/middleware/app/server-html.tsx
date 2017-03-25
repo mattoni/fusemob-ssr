@@ -1,12 +1,19 @@
 import * as React from "react";
-import { IResultProps } from "react-async-component";
+import { AsyncState } from "react-async-component";
+import { Html } from "../../../containers/Html";
 import { ISerializedState } from "../../../stores";
-import { Html } from "../../../components/Html";
+
+const description = "A server side rendering implementation featuring fuse-box and MobX";
 
 interface IServerHTMLProps {
-    asyncComponents: IResultProps;
+    asyncComponentState: AsyncState;
     initialState: ISerializedState;
+    appString: string;
 }
+
+const KeyedComponent = ({ children }: { children?: any }) => {
+    return React.Children.only(children);
+};
 
 const inlineScript = (body: string) => (
     <script
@@ -15,13 +22,25 @@ const inlineScript = (body: string) => (
     />
 );
 
-export function generateServerHTML(props: IServerHTMLProps) {
-    const { asyncComponents, initialState } = props;
-    const asyncComponentState = inlineScript(
-        `window.${asyncComponents.STATE_IDENTIFIER}=${JSON.stringify(asyncComponents.state)};`,
-    );
-    const initialState = inlineScript(
-        `window.__INITIAL_STATE__=${JSON.stringify(initialState)}`,
-    );
+export function ServerHTML(props: IServerHTMLProps) {
+    const { asyncComponentState, initialState, appString } = props;
+    const bodyElements = [];
 
+    bodyElements.push(inlineScript(
+        `window.ASYNC_COMPONENTS_STATE=${JSON.stringify(asyncComponentState)};`,
+    ));
+
+    bodyElements.push(inlineScript(
+        `window.__INITIAL_STATE__=${JSON.stringify(initialState)}`,
+    ));
+
+    const formattedBodyElements = bodyElements.map((x, idx) => <KeyedComponent key={idx}>{x}</KeyedComponent>);
+
+    return (
+        <Html
+            appString={appString}
+            description={description}
+            bodyElements={formattedBodyElements}
+        />
+    );
 }

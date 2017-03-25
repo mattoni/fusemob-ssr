@@ -1,9 +1,8 @@
 import * as React from "react";
-import * as Helmet from "react-helmet";
 import { getStyles } from "typestyle";
 
+
 interface IHtmlProps {
-    title: string;
     description: string;
     appString: string;
     bodyElements: JSX.Element[];
@@ -11,8 +10,7 @@ interface IHtmlProps {
 
 export class Html extends React.Component<IHtmlProps, undefined> {
     public render() {
-        const head = Helmet.rewind();
-        const { title, description, appString, bodyElements } = this.props;
+        const { appString, bodyElements } = this.props;
 
         // Pass generated styles to client
         const styles = (
@@ -22,13 +20,6 @@ export class Html extends React.Component<IHtmlProps, undefined> {
         return (
             <html>
                 <head>
-                    {head.base.toComponent()}
-                    {head.title.toComponent()}
-                    {head.meta.toComponent()}
-                    {head.link.toComponent()}
-                    {head.script.toComponent()}
-                    <meta name="application-name" content={title} />
-                    <meta name="description" content={description} />
                     <meta charSet="utf-8" />
                     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -39,8 +30,8 @@ export class Html extends React.Component<IHtmlProps, undefined> {
                 </head>
                 <body>
                     <main id="app" dangerouslySetInnerHTML={{ __html: appString }} />
-                    <script src="js/bundle.js" />
                     {bodyElements}
+                    <script src="js/bundle.js" />
                 </body>
             </html>
         );

@@ -381,7 +381,7 @@ debug@2.6.1:
   dependencies:
     ms "0.7.2"
 
-deep-equal@1.0.1:
+deep-equal@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
 
@@ -1136,7 +1136,7 @@ oauth-sign@~0.8.1:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
 
-object-assign@^4.0.1, object-assign@^4.1.0:
+object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
@@ -1310,11 +1310,15 @@ rc@^1.0.1, rc@^1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-async-component@next:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/react-async-component/-/react-async-component-0.2.2.tgz#243e7551673e749fe7b90e2d8b675d3612c97a2a"
+react-async-bootstrapper@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/react-async-bootstrapper/-/react-async-bootstrapper-0.0.5.tgz#0df7e3bd5b78a7d850f094aee4d71c3f3c5c2b00"
   dependencies:
-    react-tree-walker "^1.0.0"
+    react-tree-walker "^2.0.0-alpha.3"
+
+react-async-component@1.0.0-alpha.1:
+  version "1.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/react-async-component/-/react-async-component-1.0.0-alpha.1.tgz#a04c0eaea5ca9149bfb5928b7ffc1e06a004b33c"
 
 react-dom@^15.4.2:
   version "15.4.2"
@@ -1324,12 +1328,12 @@ react-dom@^15.4.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
-react-helmet@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-4.0.0.tgz#df74bcd6ff585a1ccbbfba5aaa1c346cabc43d03"
+react-helmet@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.0.0.tgz#167edc7dadf936cd627fa10ebe0f985e3f18f225"
   dependencies:
-    deep-equal "1.0.1"
-    object-assign "^4.0.1"
+    deep-equal "^1.0.1"
+    object-assign "^4.1.1"
     react-side-effect "^1.1.0"
 
 react-router-dom@^4.0.0:
@@ -1356,9 +1360,9 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^0.2.2"
 
-react-tree-walker@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-tree-walker/-/react-tree-walker-1.0.0.tgz#061f719232a5b77b01fbab21b8ee6a3ab7be7085"
+react-tree-walker@^2.0.0-alpha.3:
+  version "2.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/react-tree-walker/-/react-tree-walker-2.0.0-alpha.3.tgz#c22665646825c706534c4715d79de42cf7d5d1e5"
 
 react@^15.4.2:
   version "15.4.2"

@@ -9,7 +9,7 @@ const app = express();
 const host = process.env.HOST || "localhost";
 const port = 3000;
 
-// Disable unnecessary headeers
+// Hide this, could be security risk
 app.disable("x-powered-by");
 
 // Serve static files
