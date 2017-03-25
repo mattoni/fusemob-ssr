@@ -20,6 +20,8 @@ export async function appMiddleware(req: Request, res: Response) {
     const context: StaticRouterContext = {};
     const asyncContext = createAsyncContext();
 
+    store.domains.currency.rates
+
     const app = (
         <StaticRouter location={req.url} context={context}>
             <Provider profile={store.domains}>

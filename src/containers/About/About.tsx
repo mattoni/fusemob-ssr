@@ -6,11 +6,11 @@ const aboutClass = style({
     padding: px(10),
 });
 
-export class About extends React.Component<{}, undefined> {
+export default class About extends React.Component<{}, undefined> {
     public render() {
         return (
             <div className={aboutClass}>
-                Welcome to the about page!
+                Welcome to the about page, dude!!!!
             </div>
         );
     }

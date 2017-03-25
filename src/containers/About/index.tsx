@@ -1,11 +1,8 @@
 import { asyncComponent } from "react-async-component";
-import { About } from "./About";
+import { fsbxResolve } from "../../utils/resolveModule";
 
 export const AsyncAbout = asyncComponent({
-    resolve: async () => {
-        console.log("Loading About");
-        return About;
-    }, // Need to load module dynamically here
+    resolve: async () => fsbxResolve("About"), // Need to load module dynamically here
     ssrMode: "boundary",
     name: "AsyncAbout",
 });

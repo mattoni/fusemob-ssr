@@ -16,7 +16,9 @@ const outDir = "build";
 const outFiles = {
     server: `${outDir}/server.js`,
     client: `${outDir}/public/js/bundle.js`,
+    vendor: `${outDir}/public/js/vendor.js`,
 };
+
 // const VENDOR = `
 //     +react
 //     +react-dom
@@ -24,6 +26,7 @@ const outFiles = {
 //     +mobx-react
 // `;
 
+const lazyLoad = ["containers/About/About.tsx"];
 
 if (!isProd) {
     buildDev();
@@ -41,6 +44,8 @@ async function buildDev() {
     };
 
     await bundleClient();
+
+    bundleVendor();
 
     // setStatefulModules((name) => {
     //     return name === "client";
@@ -77,7 +82,7 @@ function bundleClient() {
         }
 
         // Otherwise, bundle it up!
-        fb.bundle(">client/index.tsx", res);
+        fb.bundle(">client/index.tsx -About.tsx", res);
     });
 }
 
@@ -94,14 +99,27 @@ function bundleServer() {
     }).bundle(">[server/index.tsx]", res));
 }
 
-// function bundleVendor() {
-//     FuseBox.init({
-//         homeDir: "src/client",
-//         log: false,
-//     }).bundle({
-//         [`dist/bundles/vendor.js`]: VENDOR
-//     });
-// }
+async function bundleVendor() {
+    const lazy: any = {};
+
+    lazyLoad.map((bundle) => {
+        const name = bundle.split("/").reverse()[0].split(".")[0];
+        lazy[`build/public/js/${name}.js`] = `[${bundle}]`;
+    });
+
+    try {
+        return FuseBox.init({
+            homeDir: "src",
+            outFile: outFiles.vendor,
+            plugins: [
+                isProd && UglifyJSPlugin(undefined),
+            ],
+            sourcemaps: true,
+        }).bundle(lazy);
+    } catch (e) {
+        console.error(e);
+    }
+}
 
 /**
  * Start our server in separate thread
