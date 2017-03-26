@@ -10,7 +10,7 @@ export default class Home extends React.Component<{}, undefined> {
     public render() {
         return (
             <div className={homeClass}>
-                Home Page!!
+                Home Page!!!
             </div>
         );
     }
