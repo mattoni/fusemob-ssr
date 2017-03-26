@@ -24,7 +24,7 @@ lazyLoad.forEach((bundle) => {
     fuse.bundle(`${directory.js}/${name}`)
         .watch()
         .hmr()
-        .instructions(`! [${bundle}]`);
+        .instructions(`[${bundle}]`);
 });
 
 
