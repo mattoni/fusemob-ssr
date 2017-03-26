@@ -7,7 +7,12 @@ interface IResolvedModule {
 
 export function fsbxResolve(name: string): Promise<React.ComponentClass<any>> {
     const moduleName = `~/containers/${name}/${name}`;
-    const file = `./js/${name}.js`;
+    let file = `/js/${name}.js`;
+
+    // adjust path for server
+    if (typeof document === "undefined") {
+        file = `./public${file}`;
+    }
 
     const resolved = (module: IResolvedModule) => {
         return module.default;
