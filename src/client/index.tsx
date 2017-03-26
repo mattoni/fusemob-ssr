@@ -17,7 +17,6 @@ declare var window: {
 
 const store = new Store(window.__INITIAL_STATE__);
 const asyncComponentState = window.ASYNC_COMPONENTS_STATE;
-console.log(asyncComponentState);
 const asyncContext = createAsyncContext();
 
 async function renderApp() {
@@ -33,7 +32,6 @@ async function renderApp() {
     );
 
     await asyncBootstrapper(app);
-    console.log("Got Async Comp.");
     ReactDOM.render(app, document.getElementById("app"));
 }
 
