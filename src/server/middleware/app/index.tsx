@@ -20,21 +20,18 @@ export async function appMiddleware(req: Request, res: Response) {
     const context: StaticRouterContext = {};
     const asyncContext = createAsyncContext();
 
-    store.domains.currency.rates
-
     const app = (
-        <StaticRouter location={req.url} context={context}>
-            <Provider profile={store.domains}>
-                <AsyncComponentProvider asyncContext={asyncContext}>
+        <AsyncComponentProvider asyncContext={asyncContext}>
+            <StaticRouter location={req.url} context={context}>
+                <Provider profile={store.domains}>
                     <App />
-                </AsyncComponentProvider>
-            </Provider>
-        </StaticRouter>
+                </Provider>
+            </StaticRouter>
+        </AsyncComponentProvider>
     );
 
     await asyncBootstrapper(app);
     const asyncState = asyncContext.getState();
-    console.log("Resolved async comp");
 
     const html = renderToStaticMarkup(
         <ServerHTML
@@ -50,10 +47,6 @@ export async function appMiddleware(req: Request, res: Response) {
         return;
     }
 
-    res.status(
-        context.missed
-            ? 404
-            : context.status || 200,
-    ).send(`<!DOCTYPE html>${html}`);
+    res.status(context.status || 200).send(`<!DOCTYPE html>${html}`);
 }
 
