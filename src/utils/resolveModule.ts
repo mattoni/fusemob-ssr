@@ -1,4 +1,6 @@
+import * as path from "path";
 import * as React from "react";
+
 declare const FuseBox: any;
 
 interface IResolvedModule {
@@ -8,13 +10,6 @@ interface IResolvedModule {
 export function fsbxResolve(name: string): Promise<React.ComponentClass<any>> {
     const moduleName = `~/containers/${name}/${name}`;
     let file = `/js/${name}.js`;
-
-    // adjust path for server
-    if (FuseBox.isServer) {
-        // const path = require("path");
-        file = `./public/js/${name}.js`;
-        console.log(file);
-    }
 
     const resolved = (module: IResolvedModule) => {
         console.log("MODULE: ", module);
@@ -27,7 +22,11 @@ export function fsbxResolve(name: string): Promise<React.ComponentClass<any>> {
                 res(resolved(require(moduleName)));
                 return;
             }
-
+            if (FuseBox.isServer) {
+                file = path.resolve(`./build/public/js/${name}.js`);
+                require(file);
+                return res(resolved(require(moduleName)));
+            }
             FuseBox.import(file, () => res(resolved(require(moduleName))));
         } catch (e) {
             console.error(e);
