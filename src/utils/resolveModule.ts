@@ -10,8 +10,10 @@ export function fsbxResolve(name: string): Promise<React.ComponentClass<any>> {
     let file = `/js/${name}.js`;
 
     // adjust path for server
-    if (typeof document === "undefined") {
-        file = `./public${file}`;
+    if (FuseBox.isServer) {
+        // const path = require("path");
+        file = `./public/js/${name}.js`;
+        console.log(file);
     }
 
     const resolved = (module: IResolvedModule) => {
@@ -19,12 +21,17 @@ export function fsbxResolve(name: string): Promise<React.ComponentClass<any>> {
         return module.default;
     };
 
-    return new Promise((res) => {
-        if (FuseBox.exists(moduleName)) {
-            res(resolved(require(moduleName)));
-            return;
-        }
+    return new Promise(async (res) => {
+        try {
+            if (FuseBox.exists(moduleName)) {
+                res(resolved(require(moduleName)));
+                return;
+            }
 
-        FuseBox.import(file, () => res(resolved(require(moduleName))));
+            FuseBox.import(file, () => res(resolved(require(moduleName))));
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
     });
 }
