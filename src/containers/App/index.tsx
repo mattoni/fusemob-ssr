@@ -6,7 +6,7 @@ import { NotFound } from "../../components/Routing";
 
 import { AsyncAbout } from "../../containers/About";
 // import { Currency } from "../../containers/Currency";
-import { Home } from "../../containers/Home";
+import { AsyncHome } from "../../containers/Home";
 
 export const App = () => (
     <section>
@@ -17,7 +17,7 @@ export const App = () => (
         <Header />
 
         <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={AsyncHome} />
             <Route path="/about" component={AsyncAbout} />
             <Route component={NotFound} />
         </Switch>

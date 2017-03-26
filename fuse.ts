@@ -16,6 +16,7 @@ const fuse = FuseBox.init({
 
 const lazyLoad = [
     "containers/About/About.tsx",
+    "containers/Home/Home.tsx",
 ];
 
 // LazyLoad Bundles
@@ -24,6 +25,7 @@ lazyLoad.forEach((bundle) => {
     fuse.bundle(`${directory.js}/${name}`)
         .watch()
         .hmr()
+        .sourceMaps(true)
         .instructions(`[${bundle}]`);
 });
 
@@ -32,14 +34,17 @@ lazyLoad.forEach((bundle) => {
 fuse.bundle(`${directory.js}/vendor`)
     .watch()
     .hmr()
+    .sourceMaps(true)
     .instructions(" ~ client/index.tsx");
 
+
 // Client Bundle
+const exclude = lazyLoad.map((bundle) => `- ${bundle.split("/").reverse()[0]}`).join(" ");
 fuse.bundle(`${directory.js}/bundle`)
     .watch()
     .hmr()
     .sourceMaps(true)
-    .instructions(" !> [client/index.tsx] - About.tsx");
+    .instructions(`!> [client/index.tsx] ${exclude}`);
 
 // Server Bundle
 fuse.bundle("server")

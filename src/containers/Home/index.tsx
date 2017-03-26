@@ -1,17 +1,8 @@
-import { px } from "csx";
-import * as React from "react";
-import { style } from "typestyle";
+import { asyncComponent } from "react-async-component";
+import { fsbxResolve } from "../../utils/resolveModule";
 
-const homeClass = style({
-    padding: px(10),
+export const AsyncHome = asyncComponent({
+    resolve: async () => fsbxResolve("Home"), // Need to load module dynamically here
+    ssrMode: "boundary",
+    name: "AsyncHome",
 });
-
-export class Home extends React.Component<{}, undefined> {
-    public render() {
-        return (
-            <div className={homeClass}>
-                Home Page!!
-            </div>
-        );
-    }
-}

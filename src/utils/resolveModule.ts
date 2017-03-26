@@ -15,6 +15,7 @@ export function fsbxResolve(name: string): Promise<React.ComponentClass<any>> {
     }
 
     const resolved = (module: IResolvedModule) => {
+        console.log("MODULE: ", module);
         return module.default;
     };
 
