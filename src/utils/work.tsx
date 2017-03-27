@@ -56,7 +56,6 @@ export function withWork<T>(WrappedComponent: React.ComponentClass<T>, work: (pr
                 return;
             }
 
-            console.log("Work!");
             // Call work again
             work(props);
             WorkState.updateState(id, { locked: true });
@@ -73,7 +72,6 @@ export function withWork<T>(WrappedComponent: React.ComponentClass<T>, work: (pr
         public componentWillUnmount() {
             // Ready to go again
             WorkState.updateState(id, { locked: false });
-            console.log("UNMOUNT");
         }
 
         public render() {

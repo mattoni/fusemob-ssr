@@ -52,8 +52,6 @@ export class CurrencyStore {
 
         const val: ICurrencyResponse = await resp.json();
 
-        console.log("Rates", val);
-        await time(1000);
         runInAction(() => {
             this.state.loading = false;
             this.state.rates = val;
@@ -70,6 +68,3 @@ export class CurrencyStore {
     }
 }
 
-function time(t: number) {
-    return new Promise(res => setTimeout(res, t));
-}
