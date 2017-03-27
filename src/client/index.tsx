@@ -6,25 +6,25 @@ import { AsyncComponentProvider, createAsyncContext } from "react-async-componen
 import * as ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "../containers/App";
-import { Store } from "../stores";
+import { IRenderedStates, Store } from "../stores";
+import { WorkState } from "../utils/work";
 import "./styles";
 
 // These are the vars we stashed on the window
-declare var window: {
-    __INITIAL_STATE__: {};
-    ASYNC_COMPONENTS_STATE: {};
-};
 
-const store = new Store(window.__INITIAL_STATE__);
-const asyncComponentState = window.ASYNC_COMPONENTS_STATE;
+const states: IRenderedStates = require("~/rendered/states.js");
+
+const store = new Store(states.stores);
 const asyncContext = createAsyncContext();
+
+WorkState.load(states.asyncWork);
 
 async function renderApp() {
 
     const app = (
         <BrowserRouter>
             <Provider {...store.domains}>
-                <AsyncComponentProvider asyncContext={asyncContext} rehydrateState={asyncComponentState}>
+                <AsyncComponentProvider asyncContext={asyncContext} rehydrateState={states.asyncComponents}>
                     <App />
                 </AsyncComponentProvider>
             </Provider>

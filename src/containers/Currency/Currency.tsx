@@ -22,7 +22,7 @@ export class Currency extends React.Component<ICurrencyProps, undefined> {
     public render() {
         const { currency } = this.props;
         const rate = currency && currency.rates ? currency.rates.rates["JPY"] : "Not Found";
-        const content = currency && currency.loading 
+        const content = currency && currency.state && currency.state.loading
             ? "Loading..."
             : <span>USD -> JPY rate: $1 = <strong className={moneyClass}>¥{rate}</strong></span>;
         return (

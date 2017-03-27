@@ -8,6 +8,7 @@ import { StaticRouter, StaticRouterContext } from "react-router-dom";
 import { App } from "../../../containers/App";
 import { Store } from "../../../stores";
 import { initStyles } from "../../../utils/styles";
+import { WorkState } from "../../../utils/work";
 import { ServerHTML } from "./server-html";
 
 // Configure mobx for rendering on the server
@@ -19,6 +20,7 @@ export async function appMiddleware(req: Request, res: Response) {
     const store = new Store();
     const context: StaticRouterContext = {};
     const asyncContext = createAsyncContext();
+    WorkState.load({});
 
     const app = (
         <AsyncComponentProvider asyncContext={asyncContext}>

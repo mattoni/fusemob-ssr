@@ -1,7 +1,8 @@
 import * as React from "react";
 import { AsyncState } from "react-async-component";
 import { Html } from "../../../containers/Html";
-import { ISerializedState } from "../../../stores";
+import { IRenderedStates, ISerializedState } from "../../../stores";
+import { WorkState } from "../../../utils/work";
 
 const description = "A server side rendering implementation featuring fuse-box and MobX";
 
@@ -25,13 +26,14 @@ const inlineScript = (body: string) => (
 export function ServerHTML(props: IServerHTMLProps) {
     const { asyncComponentState, initialState, appString } = props;
     const bodyElements = [];
+    const state: IRenderedStates = {
+        asyncComponents: asyncComponentState,
+        asyncWork: WorkState.serialize(),
+        stores: initialState,
+    };
 
     bodyElements.push(inlineScript(
-        `window.ASYNC_COMPONENTS_STATE=${JSON.stringify(asyncComponentState)};`,
-    ));
-
-    bodyElements.push(inlineScript(
-        `window.__INITIAL_STATE__=${JSON.stringify(initialState)}`,
+        `FuseBox.dynamic('rendered/states.js', 'module.exports=${JSON.stringify(state)}');`,
     ));
 
     const formattedBodyElements = bodyElements.map((x, idx) => <KeyedComponent key={idx}>{x}</KeyedComponent>);

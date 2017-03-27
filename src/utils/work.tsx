@@ -9,7 +9,7 @@ interface IJobState {
     error?: string;
 }
 
-class WorkState {
+export class WorkState {
     private static jobId = 0;
     private static states: { [key: string]: IJobState } = {};
 
@@ -32,6 +32,13 @@ class WorkState {
         return this.states[id];
     }
 
+    public static serialize() {
+        return this.states;
+    }
+
+    public static load(serialized: { [key: string]: IJobState }) {
+        this.states = serialized;
+    }
 }
 
 export function withWork<T>(WrappedComponent: React.ComponentClass<T>, work: (props: T) => Promise<any>) {
@@ -43,29 +50,24 @@ export function withWork<T>(WrappedComponent: React.ComponentClass<T>, work: (pr
 
             if (FuseBox.isServer) { return; }
 
-            let state = WorkState.getState(id);
-            if (!state) {
-                WorkState.updateState(id, { locked: true });
-                state = WorkState.getState(id);
-            }
+            const state = WorkState.getState(id);
 
-            if (state.locked) {
+            if (state && state.locked) {
                 return;
             }
 
+            console.log("Work!");
             // Call work again
             work(props);
+            WorkState.updateState(id, { locked: true });
         }
-        // Plugin method for react-async-asyncBootstrapperTarget
+        // Plugin method for react-async-bootstrap
         // Called once on server/on client and will delay loading
         public async asyncBootstrapperTarget() {
             // Needs to check if server loaded this / if there was an error
             WorkState.updateState(id, { locked: true });
             if (!FuseBox.isServer) { return; }
-
-            console.log("async");
-            await work(this.props);
-            WorkState.updateState(id, { completed: true });
+            return work(this.props);
         }
 
         public componentWillUnmount() {
