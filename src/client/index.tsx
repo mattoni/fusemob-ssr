@@ -1,4 +1,4 @@
-import { setStatefulModules } from "fuse-box/modules/fuse-hmr";
+// import { setStatefulModules } from "fuse-box/modules/fuse-hmr";
 import { Provider } from "mobx-react";
 import * as React from "react";
 import asyncBootstrapper from "react-async-bootstrapper";
@@ -23,7 +23,7 @@ async function renderApp() {
 
     const app = (
         <BrowserRouter>
-            <Provider profile={store.domains}>
+            <Provider {...store.domains}>
                 <AsyncComponentProvider asyncContext={asyncContext} rehydrateState={asyncComponentState}>
                     <App />
                 </AsyncComponentProvider>
@@ -37,9 +37,8 @@ async function renderApp() {
 
 renderApp();
 
-
-
-setStatefulModules((name) => {
-  // Add the things you think are stateful:
-  return /stores/.test(name) || /client\/index/.test(name);
-});
+// setStatefulModules((name) => {
+//   // Add the things you think are stateful:
+//   console.log(name, /stores/.test(name) || /client\/index/.test(name));
+//   return /stores/.test(name) || /client\/index/.test(name);
+// });

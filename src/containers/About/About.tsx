@@ -2,6 +2,7 @@ import { px } from "csx";
 import * as React from "react";
 import { style } from "typestyle";
 
+
 const aboutClass = style({
     padding: px(10),
 });

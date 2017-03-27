@@ -23,7 +23,7 @@ export async function appMiddleware(req: Request, res: Response) {
     const app = (
         <AsyncComponentProvider asyncContext={asyncContext}>
             <StaticRouter location={req.url} context={context}>
-                <Provider profile={store.domains}>
+                <Provider {...store.domains}>
                     <App />
                 </Provider>
             </StaticRouter>

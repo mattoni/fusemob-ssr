@@ -2,6 +2,7 @@ import { action, observable, toJS } from "mobx";
 
 interface ICurrencyState {
     rates: ICurrencyResponse | undefined;
+    loading: boolean;
     error: any;
 }
 
@@ -24,6 +25,7 @@ export class CurrencyStore {
         this.state = {
             rates: undefined,
             error: undefined,
+            loading: false,
         };
     }
 
@@ -31,17 +33,24 @@ export class CurrencyStore {
         return this.state.rates;
     }
 
+    public get loading() {
+        return this.state.loading;
+    }
+
     @action
     public async fetchRates() {
+        this.setState("loading", true);
         const resp = await fetch("https://api.fixer.io/latest?base=USD");
         if (!resp.ok) {
             this.setState("error", await resp.json());
+            this.setState("loading", false);
             console.error("Unable to fetch rates");
             return;
         }
 
         const val: ICurrencyResponse = await resp.json();
 
+        this.setState("loading", false);
         this.setState("rates", val);
     }
 

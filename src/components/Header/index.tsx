@@ -41,6 +41,7 @@ export const Header = () => (
         <ul className={listClass}>
             <li><Link to="/">Home</Link></li>
             <li><Link to="/about">About</Link></li>
+            <li><Link to="/currency">Currency</Link></li>
             <li><Link to="/notreal">NotALink</Link></li>
         </ul>
     </nav>

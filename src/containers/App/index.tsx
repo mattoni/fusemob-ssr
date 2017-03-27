@@ -5,7 +5,7 @@ import { Header } from "../../components/Header";
 import { NotFound } from "../../components/Routing";
 
 import { AsyncAbout } from "../../containers/About";
-// import { Currency } from "../../containers/Currency";
+import { Currency } from "../../containers/Currency";
 import { AsyncHome } from "../../containers/Home";
 
 export const App = () => (
@@ -19,6 +19,7 @@ export const App = () => (
         <Switch>
             <Route exact path="/" component={AsyncHome} />
             <Route path="/about" component={AsyncAbout} />
+            <Route path="/currency" component={Currency} />
             <Route component={NotFound} />
         </Switch>
     </section>
