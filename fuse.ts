@@ -1,50 +1,45 @@
-import {
-    FuseBox,
-} from "fsbx";
+import { FuseBox } from "fuse-box";
+import { LazyModuleName, LazyModulePaths } from "./lazy";
 
 // const isProd = process.argv.indexOf("dev") === -1;
 
-const directory = {
+const dirs = {
     root: "build",
     js: "public/js",
 };
 
 const fuse = FuseBox.init({
     homeDir: "src",
-    output: `${directory.root}/$name.js`,
+    alias: {
+        "lazy": "./lazy.ts",
+    },
+    output: `${dirs.root}/$name.js`,
+    hash: false, // unless prod
 });
-
-const lazyLoad = [
-    "containers/About/About.tsx",
-    "containers/Home/Home.tsx",
-];
-
-// LazyLoad Bundles
-lazyLoad.forEach((bundle) => {
-    const name = bundle.split("/").reverse()[0].split(".")[0];
-    fuse.bundle(`${directory.js}/${name}`)
-        .watch()
-        .hmr()
-        .sourceMaps(true)
-        .instructions(`[${bundle}]`);
-});
-
 
 // Vendor Bundle
-fuse.bundle(`${directory.js}/vendor`)
+fuse.bundle(`${dirs.js}/vendor`)
     .watch()
     .hmr()
     .sourceMaps(true)
     .instructions(" ~ client/index.tsx");
 
-
 // Client Bundle
-const exclude = lazyLoad.map((bundle) => `- ${bundle.split("/").reverse()[0]}`).join(" ");
-fuse.bundle(`${directory.js}/bundle`)
-    .watch()
+const client = fuse.bundle(`${dirs.js}/bundle`)
+    .splitConfig({ browser: `js/bundles`, dest: `${dirs.js}/bundles/` });
+
+for (const path in LazyModulePaths) {
+    const route = LazyModulePaths[path as LazyModuleName];
+    const fixme = route.split(".tsx");
+    fixme.pop();
+    client
+        .split(`${fixme}.jsx`, `${path} > ${route}`);
+}
+
+client.watch()
     .hmr()
     .sourceMaps(true)
-    .instructions(`!> [client/index.tsx] ${exclude}`);
+    .instructions(`> [client/index.tsx] +[containers/**/**.*]`);
 
 // Server Bundle
 fuse.bundle("server")

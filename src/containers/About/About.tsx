@@ -11,7 +11,7 @@ export default class About extends React.Component<{}, undefined> {
     public render() {
         return (
             <div className={aboutClass}>
-                Welcome to the about page!!
+                Welcome to the about page!!!
             </div>
         );
     }

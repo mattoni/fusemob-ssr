@@ -4,6 +4,9 @@
         "paths": {
             "*": [
                 "src/*"
+            ],
+            "lazy": [
+                "lazy.ts"
             ]
         },
         "outDir": "build",
@@ -27,8 +30,7 @@
             "./typings"
         ]
     },
-    "include": [
-        "./src/**/*",
-        "./fuse-spark.ts"
+    "exclude": [
+        "node_modules"
     ]
 }
