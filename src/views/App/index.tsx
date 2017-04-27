@@ -1,12 +1,11 @@
 import * as React from "react";
 import { Helmet } from "react-helmet";
-import { Route, Switch } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { NotFound } from "../../components/Routing";
 
-import { AsyncAbout } from "../../containers/About";
-import { Currency } from "../../containers/Currency";
-import { AsyncHome } from "../../containers/Home";
+import { AsyncAbout } from "../../views/About";
+import { Currency } from "../../views/Currency";
+import { AsyncHome } from "../../views/Home";
 
 export const App = () => (
     <section>
@@ -15,12 +14,9 @@ export const App = () => (
         </Helmet>
 
         <Header />
-
-        <Switch>
             <Route exact path="/" component={AsyncHome} />
             <Route path="/about" component={AsyncAbout} />
             <Route path="/currency" component={Currency} />
             <Route component={NotFound} />
-        </Switch>
     </section>
 );

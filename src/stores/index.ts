@@ -20,8 +20,6 @@ export type ISerializedState = {
  * State sent to the browser
  */
 export interface IRenderedStates {
-    asyncComponents: {};
-    asyncWork: {};
     stores: ISerializedState;
 }
 

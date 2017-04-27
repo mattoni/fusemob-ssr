@@ -10,9 +10,6 @@ const dirs = {
 
 const fuse = FuseBox.init({
     homeDir: "src",
-    alias: {
-        "lazy": "./lazy.ts",
-    },
     output: `${dirs.root}/$name.js`,
     hash: false, // unless prod
 });
@@ -39,7 +36,7 @@ for (const path in LazyModulePaths) {
 client.watch()
     .hmr()
     .sourceMaps(true)
-    .instructions(`> [client/index.tsx] +[containers/**/**.*]`);
+    .instructions(`> [client/index.tsx] +[views/**/**.*]`);
 
 // Server Bundle
 fuse.bundle("server")

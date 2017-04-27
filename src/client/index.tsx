@@ -5,33 +5,26 @@ import asyncBootstrapper from "react-async-bootstrapper";
 import { AsyncComponentProvider, createAsyncContext } from "react-async-component";
 import * as ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import { App } from "../containers/App";
 import { IRenderedStates, Store } from "../stores";
-import { WorkState } from "../utils/work";
+import { App } from "../views/App";
 import "./styles";
 
 // These are the vars we stashed on the window
-
-const states: IRenderedStates = require("~/rendered/states.js");
+// Use Fusebox to pull them in dynamically
+const states: IRenderedStates = require("~/rendered/state.js");
 
 const store = new Store(states.stores);
 const asyncContext = createAsyncContext();
 
-WorkState.load(states.asyncWork);
-
 async function renderApp() {
-
     const app = (
         <BrowserRouter>
             <Provider {...store.domains}>
-                <AsyncComponentProvider asyncContext={asyncContext} rehydrateState={states.asyncComponents}>
-                    <App />
-                </AsyncComponentProvider>
+                <App />
             </Provider>
         </BrowserRouter>
     );
 
-    await asyncBootstrapper(app);
     ReactDOM.render(app, document.getElementById("app"));
 }
 
