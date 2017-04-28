@@ -5,13 +5,12 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "ts-node fuse"
+        "start": "yarn cache clean && yarn install && ts-node fuse"
     },
     "keywords": [
         "react",
         "mobx",
         "typescript",
-        "react-router",
         "isomorphic",
         "fuse-box",
         "ssr"

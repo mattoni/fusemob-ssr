@@ -3,6 +3,8 @@ import * as express from "express";
 import * as path from "path";
 import { appMiddleware } from "./middleware";
 
+console.log("asdfasdfasdfasdf");
+
 const app = express();
 
 // Basic settings
@@ -24,7 +26,7 @@ app.listen(port, host, (err: any) => {
     if (err) {
         console.error(Chalk.bgRed(err));
     } else {
-        console.info(Chalk.black.bgGreen(
+        console.log(Chalk.black.bgGreen(
             `\n\n🐙  Listening at http://${host}:${port}\n`,
         ));
     }

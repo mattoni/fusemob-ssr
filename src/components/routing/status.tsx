@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Route, StaticRouterContext } from "react-router-dom";
 
 interface IStatusProps {
     code: number;

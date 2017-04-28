@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Html } from "components/html";
-import { IRenderedStates, ISerializedState } from "../../../stores";
+import { IRenderedStates, ISerializedState } from "stores";
 
 const description = "A server side rendering implementation featuring fuse-box and MobX";
 

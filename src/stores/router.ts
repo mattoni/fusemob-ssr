@@ -1,4 +1,4 @@
-import { observable, action } from "mobx";
+import { observable, action, toJS } from "mobx";
 import { Router, RouteConfig, RouterConfig } from "yester";
 
 interface State {
@@ -13,9 +13,7 @@ interface State {
  * Handles state of routing for route components. 
  */
 export class RouterStore {
-    private router: Router;
-
-    @observable private readonly state: State = {
+    @observable public readonly state: State = {
         route: undefined,
         transitioning: true,
         lastRoute: undefined,
@@ -23,6 +21,7 @@ export class RouterStore {
         oldPath: undefined
     };
 
+    private router: Router;
     constructor(routes: RouteConfig[], config: RouterConfig) {
         this.router = new Router(routes, config);
     }
@@ -99,6 +98,10 @@ export class RouterStore {
         }
 
         this.state.transitioning = t;
+    }
+
+    public serialize() {
+        return toJS(this.state);
     }
 
     /**

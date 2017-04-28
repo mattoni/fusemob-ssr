@@ -35,16 +35,17 @@ let env_vars: EnvVars = {
 
 let build: string;
 let clientBundle: Bundle;
+let serverBundle: Bundle;
 let fuse: FuseBox;
 
 const directory = {
     homeDir: "src",
     outFolder: "build",
-    js: "public/js",
+    js: "js",
 };
 
-Sparky.task("default", ["clean", "version-file", "setup-build", "", "run"], () => {
-
+Sparky.task("default", ["clean", "version-file", "setup-build", "serve-dev", "run"], () => {
+    //
 });
 
 Sparky.task("build", ["set-prod", "clean", "version-file", "setup-build", "run"], () => {
@@ -135,23 +136,12 @@ Sparky.task("setup-build", () => {
 
     fuse = FuseBox.init(options);
 
-    // Vendor Bundle
-    const vendorBundle = fuse.bundle(`${directory.js}/vendor`);
-
-    clientBundle = fuse.bundle(`${directory.js}/bundle`);
-    vendorBundle.instructions(" ~ index.tsx");
-    clientBundle.instructions(`> [index.tsx]`);
+    // Server and Client bundles
+    serverBundle = fuse.bundle(`${directory.js}/server`).instructions(` > [server/index.ts]`);
 });
 
 Sparky.task("serve-dev", () => {
-
-    fuse.dev({ root: false, port: 4444, hmr: true }, server => {
-        const app: express.Application = server.httpServer.app;
-        app.use(express.static(build));
-        app.get("*", function (req, res) {
-            res.sendFile(path.join(build, "index.html"));
-        });
-    });
-
-    clientBundle.hmr().watch();
+    serverBundle.watch("server/**").completed(proc => proc.start());
 });
+
+Sparky.task("run", () => fuse.run());

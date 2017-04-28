@@ -1,5 +1,6 @@
 export * from "./status";
 export * from "./notfound";
+export * from "./link";
 
 import * as React from "react";
 import { Component, } from "react";
