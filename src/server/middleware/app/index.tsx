@@ -1,9 +1,9 @@
+// tslint:disable-next-line:no-unused-variable
+import * as React from "react";
 import { Request, Response } from "express";
 import { Provider, useStaticRendering } from "mobx-react";
-import * as React from "react";
-import asyncBootstrapper from "react-async-bootstrapper";
+import { AppContainer } from "views";
 import { renderToStaticMarkup, renderToString } from "react-dom/server";
-import { App } from "../../../containers/App";
 import { Store } from "../../../stores";
 import { initStyles } from "../../../utils/styles";
 import { ServerHTML } from "./server-html";
@@ -18,7 +18,7 @@ export async function appMiddleware(req: Request, res: Response) {
 
     const app = (
         <Provider {...store.domains}>
-            <App />
+            <AppContainer />
         </Provider>
     );
 
@@ -30,12 +30,6 @@ export async function appMiddleware(req: Request, res: Response) {
         />,
     );
 
-    // if (context.url) {
-    //     res.status(302).setHeader("Location", context.url);
-    //     res.end();
-    //     return;
-    // }
-
-    res.status(context.status || 200).send(`<!DOCTYPE html>${html}`);
+    res.status(200).send(`<!DOCTYPE html>${html}`);
 }
 

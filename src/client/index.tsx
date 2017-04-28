@@ -1,12 +1,9 @@
 // import { setStatefulModules } from "fuse-box/modules/fuse-hmr";
 import { Provider } from "mobx-react";
 import * as React from "react";
-import asyncBootstrapper from "react-async-bootstrapper";
-import { AsyncComponentProvider, createAsyncContext } from "react-async-component";
 import * as ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
 import { IRenderedStates, Store } from "../stores";
-import { App } from "../views/App";
+import { App } from "components/app";
 import "./styles";
 
 // These are the vars we stashed on the window

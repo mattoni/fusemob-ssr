@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "ts-node fuse.ts dev"
+        "start": "ts-node fuse"
     },
     "keywords": [
         "react",
@@ -45,6 +45,7 @@
         "@types/react-helmet": "^0.0.28",
         "@types/rimraf": "^0.0.28",
         "fuse-box": "2.0.0-beta.",
+        "fuse-box-typechecker": "git://github.com/fuse-box/fuse-box-typechecker",
         "rimraf": "^2.6.1",
         "ts-node": "^2.1.0",
         "tslint": "^4.5.1",

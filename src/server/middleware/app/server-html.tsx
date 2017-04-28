@@ -1,6 +1,5 @@
 import * as React from "react";
-import { AsyncState } from "react-async-component";
-import { Html } from "../../../containers/Html";
+import { Html } from "components/html";
 import { IRenderedStates, ISerializedState } from "../../../stores";
 
 const description = "A server side rendering implementation featuring fuse-box and MobX";

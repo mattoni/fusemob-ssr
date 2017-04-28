@@ -785,6 +785,12 @@ fstream@^1.0.0, fstream@^1.0.10, fstream@^1.0.2:
     mkdirp ">=0.5 0"
     rimraf "2"
 
+"fuse-box-typechecker@git://github.com/fuse-box/fuse-box-typechecker":
+  version "1.0.1"
+  resolved "git://github.com/fuse-box/fuse-box-typechecker#0305779bb39952822a6ef08035be3ddc4afed0e5"
+  dependencies:
+    "@types/node" "^7.0.8"
+
 fuse-box@2.0.0-beta.:
   version "2.0.0-beta.5"
   resolved "https://registry.yarnpkg.com/fuse-box/-/fuse-box-2.0.0-beta.5.tgz#01e2ca4a56d96da34331b259df73f8f12fdede83"
@@ -989,11 +995,11 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2, inherits@2.0.1:
+inherits@2, inherits@2.0.1, inherits@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
 
-inherits@2.0.3, inherits@^2.0.1, inherits@~2.0.0, inherits@~2.0.1:
+inherits@2.0.3, inherits@~2.0.0, inherits@~2.0.1:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
 
