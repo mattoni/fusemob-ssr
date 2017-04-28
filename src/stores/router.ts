@@ -1,7 +1,7 @@
 import { observable, action, toJS } from "mobx";
 import { Router, RouteConfig, RouterConfig } from "yester";
 
-interface State {
+interface IRouterState {
     route: string | undefined;
     transitioning: boolean;
     lastRoute: string | undefined;
@@ -13,7 +13,7 @@ interface State {
  * Handles state of routing for route components. 
  */
 export class RouterStore {
-    @observable public readonly state: State = {
+    @observable public readonly state: IRouterState = {
         route: undefined,
         transitioning: true,
         lastRoute: undefined,

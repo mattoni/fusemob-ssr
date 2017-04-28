@@ -30,9 +30,9 @@ export class Html extends React.Component<IHtmlProps, undefined> {
                 </head>
                 <body>
                     <main id="app" dangerouslySetInnerHTML={{ __html: appString }} />
-                    <script src="js/vendor.js" />
+                    <script src="/vendor.js" />
                     {bodyElements}
-                    <script src="js/bundle.js" />
+                    <script src="/bundle.js" />
                 </body>
             </html>
         );

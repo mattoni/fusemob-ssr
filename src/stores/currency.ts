@@ -13,7 +13,6 @@ interface ICurrencyResponse {
 }
 
 export class CurrencyStore {
-
     @observable public readonly state: ICurrencyState;
 
     constructor(state?: ICurrencyState) {

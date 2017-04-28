@@ -1,4 +1,3 @@
-export * from "./status";
 export * from "./notfound";
 export * from "./link";
 

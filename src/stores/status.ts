@@ -1,14 +1,14 @@
 import { observable, action, toJS } from "mobx";
 
-interface State {
+interface IStatusState {
     status: number;
 }
 
 /**
- * Handles state of routing for route components. 
+ * Handles state of the http server's status
  */
 export class StatusStore {
-    @observable public readonly state: State = {
+    @observable public readonly state: IStatusState = {
         status: 200
     };
 

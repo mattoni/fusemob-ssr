@@ -1,9 +1,10 @@
-// import { setStatefulModules } from "fuse-box/modules/fuse-hmr";
-import { Provider } from "mobx-react";
+// tslint:disable-next-line:no-unused-variable
 import * as React from "react";
+import { setStatefulModules } from "fuse-box/modules/fuse-hmr";
+import { Provider } from "mobx-react";
 import * as ReactDOM from "react-dom";
 import { IRenderedStates, Store } from "../stores";
-import { App } from "components/app";
+import { AppContainer } from "views";
 import "./styles";
 
 // These are the vars we stashed on the window
@@ -11,15 +12,12 @@ import "./styles";
 const states: IRenderedStates = require("~/rendered/state.js");
 
 const store = new Store(states.stores);
-const asyncContext = createAsyncContext();
 
 async function renderApp() {
     const app = (
-        <BrowserRouter>
-            <Provider {...store.domains}>
-                <App />
-            </Provider>
-        </BrowserRouter>
+        <Provider {...store.domains}>
+            <AppContainer />
+        </Provider>
     );
 
     ReactDOM.render(app, document.getElementById("app"));
@@ -27,8 +25,8 @@ async function renderApp() {
 
 renderApp();
 
-// setStatefulModules((name) => {
-//   // Add the things you think are stateful:
-//   console.log(name, /stores/.test(name) || /client\/index/.test(name));
-//   return /stores/.test(name) || /client\/index/.test(name);
-// });
+setStatefulModules((name) => {
+    // Add the things you think are stateful:
+    console.log(name, /stores/.test(name) || /client\/index/.test(name));
+    return /stores/.test(name) || /client\/index/.test(name);
+});

@@ -32,23 +32,23 @@ let env_vars: EnvVars = {
     YEAR: new Date().getFullYear()
 };
 
-
-let build: string;
-let clientBundle: Bundle;
-let serverBundle: Bundle;
+let server = false;
+let bundle: Bundle;
 let fuse: FuseBox;
+let options: FuseBoxOptions;
+let build: string;
 
 const directory = {
     homeDir: "src",
-    outFolder: "build",
-    js: "js",
+    outFolder: "server-build",
+    js: "js"
 };
 
-Sparky.task("default", ["clean", "version-file", "setup-build", "serve-dev", "run"], () => {
+Sparky.task("server-start", ["clean", "version-file", "setup-server", "options", "build", "start"], () => {
     //
 });
 
-Sparky.task("build", ["set-prod", "clean", "version-file", "setup-build", "run"], () => {
+Sparky.task("server-build", ["set-prod", "clean", "version-file", "setup-server", "options", "build"], () => {
     //
 });
 
@@ -65,8 +65,17 @@ Sparky.task("version-file", () => {
     fs.writeFileSync(versionFilePath, JSON.stringify({ version: env_vars.VERSION }, undefined, 4));
 });
 
-Sparky.task("setup-build", () => {
-    let options: FuseBoxOptions = {
+Sparky.task("setup-server", () => {
+    server = true;
+});
+
+Sparky.task("setup-client", () => {
+    server = false;
+    directory.outFolder = "client-build";
+});
+
+Sparky.task("options", () => {
+    options = {
         homeDir: directory.homeDir,
         output: `${directory.outFolder}/$name.js`,
         alias: {
@@ -128,6 +137,10 @@ Sparky.task("setup-build", () => {
         ]
     };
 
+    options["serverBundle"] = server;
+});
+
+Sparky.task("build", () => {
     if (env_vars.NODE_ENV === "production") {
         options.plugins!.push([
             UglifyJSPlugin()
@@ -135,13 +148,18 @@ Sparky.task("setup-build", () => {
     }
 
     fuse = FuseBox.init(options);
-
-    // Server and Client bundles
-    serverBundle = fuse.bundle(`${directory.js}/server`).instructions(` > [server/index.ts]`);
+    // Bundle
+    if (server) {
+        bundle = fuse.bundle(`${directory.js}/bundle`).instructions(` > [server/index.ts]`);
+        fuse.bundle(`${directory.js}/vendor`).instructions(" ~ server/index.ts");
+    } else {
+        bundle = fuse.bundle(`${directory.js}/bundle`).instructions(` > [server/index.ts]`);
+        fuse.bundle(`${directory.js}/vendor`).instructions(" ~ server/index.ts");
+    }
+    fuse.run();
 });
 
-Sparky.task("serve-dev", () => {
-    serverBundle.watch("server/**").completed(proc => proc.start());
+Sparky.task("start", () => {
+    bundle.completed(proc => proc.start());
+    server ? bundle.watch("server/**") : bundle.watch("client/**");
 });
-
-Sparky.task("run", () => fuse.run());

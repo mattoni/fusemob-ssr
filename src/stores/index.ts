@@ -2,15 +2,15 @@ import "isomorphic-fetch";
 import { CurrencyStore } from "./currency";
 import { RouterStore } from "./router";
 import { StatusStore } from "./status";
-/**
- * Available stores. Add new store definitions here
- */
 
 export interface Serializable {
     serialize: () => any;
     state: any;
 }
 
+/**
+ * Available stores. Add new store definitions here
+ */
 export interface IStores {
     currency: CurrencyStore;
     status: StatusStore;

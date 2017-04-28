@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "yarn cache clean && yarn install && ts-node fuse"
+        "start": "yarn cache clean && yarn install && ts-node fuse server-start"
     },
     "keywords": [
         "react",
@@ -49,6 +49,7 @@
         "ts-node": "^2.1.0",
         "tslint": "^4.5.1",
         "tslint-react": "^2.5.0",
-        "typescript": "rc"
+        "typescript": "rc",
+        "uglify-js": "^2.8.22"
     }
 }
