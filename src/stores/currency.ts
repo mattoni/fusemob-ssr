@@ -1,4 +1,4 @@
-import { action, computed, observable, runInAction, toJS } from "mobx";
+import { action, observable, runInAction, toJS } from "mobx";
 
 interface ICurrencyState {
     rates: ICurrencyResponse | undefined;

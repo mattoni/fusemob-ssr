@@ -3,8 +3,6 @@ import * as express from "express";
 import * as path from "path";
 import { appMiddleware } from "./middleware";
 
-console.log("asdfasdfasdfasdf");
-
 const app = express();
 
 // Basic settings

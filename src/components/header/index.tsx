@@ -1,6 +1,7 @@
-import { percent, rem } from "csx";
+// tslint:disable-next-line:no-unused-variable
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { percent, rem } from "csx";
+import { Link } from "components/routing";
 import { style } from "typestyle";
 
 const navClass = style({
@@ -39,10 +40,10 @@ const listClass = style({
 export const Header = () => (
     <nav className={navClass}>
         <ul className={listClass}>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/currency">Currency</Link></li>
-            <li><Link to="/notreal">NotALink</Link></li>
+            <li><Link path ="/">Home</Link></li>
+            <li><Link path="/about">About</Link></li>
+            <li><Link path="/currency">Currency</Link></li>
+            <li><Link path="/notreal">NotALink</Link></li>
         </ul>
     </nav>
 );

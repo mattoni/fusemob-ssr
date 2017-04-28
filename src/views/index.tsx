@@ -1,5 +1,5 @@
 import * as React from "react";
-import { HelmetComponent } from "react-helmet";
+import { Helmet } from "react-helmet";
 import { observer, inject } from "mobx-react";
 import { IStores } from "stores";
 import { Header } from "components/header";
@@ -15,13 +15,11 @@ interface AppContainerProps {
 @observer
 export class AppContainer extends React.Component<AppContainerProps, {}> {
     public render() {
-
         return (
             <section>
-                <HelmetComponent>
+                <Helmet>
                     <title>FuseMob SSR</title>
-                </HelmetComponent>
-
+                </Helmet>
                 <Header />
                 <Route path="*" component={NotFound} />
             </section>
