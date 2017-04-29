@@ -1,8 +1,10 @@
-export * from "./notfound";
 export * from "./link";
+export * from "./notfound";
 
+// tslint:disable-next-line:no-unused-variable
 import * as React from "react";
 import { Component, } from "react";
+import { LoadingIcon } from "components/loading-icon";
 import { observer, inject } from "mobx-react";
 import { IStores } from "stores";
 
@@ -28,6 +30,10 @@ export class Route extends Component<RouteProps, {}> {
         if (!this.isMatch()) {
             return null;
         }
+        
+        if (this.shouldShowLoader()) {
+            return <LoadingIcon />;
+        }
 
         return <Component />;
     }
@@ -46,6 +52,35 @@ export class Route extends Component<RouteProps, {}> {
             return false;
         }
 
+        return path.indexOf(router.route) !== -1;
+    }
+
+    private shouldShowLoader() {
+        const { path, router } = this.props;
+        if (!router || !router.route) {
+            return false;
+        }
+
+        // Don't show if no transition is happening
+        if (!router.isTransitioning || !router.finishedFirstLoad) {
+            return false;
+        }
+
+        // if the path matches directly
+        // show the loading icon
+        if (typeof path === "string") {
+            return path === router.route;
+        }
+
+
+        // If array of paths, dont show loading icon if the last
+        // route was one we  render for. i.e. - if we are transitioning between
+        // sub routes, no need to show loading icon here.
+        if (router.lastRoute && path.indexOf(router.lastRoute) !== -1) {
+            return false;
+        };
+
+        // finally, if the route is in our array, show the loading icon
         return path.indexOf(router.route) !== -1;
     }
 };

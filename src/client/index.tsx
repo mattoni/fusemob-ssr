@@ -1,9 +1,8 @@
 // tslint:disable-next-line:no-unused-variable
 import * as React from "react";
-import { setStatefulModules } from "fuse-box/modules/fuse-hmr";
 import { Provider } from "mobx-react";
 import * as ReactDOM from "react-dom";
-import { IRenderedStates, Store } from "stores";
+import { IRenderedStates, Store, useStore } from "stores";
 import { AppContainer } from "views";
 import "./styles";
 
@@ -12,6 +11,10 @@ import "./styles";
 const states: IRenderedStates = require("~/rendered/state.js");
 if (states.stores.router) {
     states.stores.router.config.type = "browser";
+}
+
+if (states.stores.status) {
+    states.stores.status.client = true;
 }
 
 const store = new Store(states.stores);
@@ -27,6 +30,11 @@ async function renderApp() {
 }
 
 renderApp();
+useStore(store);
+
+// Custom HMR, will forcefully reload if you edit a store file or
+// one listed under fullPaths - Keeps state in sync
+import { setStatefulModules } from "fuse-box/modules/fuse-hmr";
 
 setStatefulModules((name) => {
     // Add the things you think are stateful:

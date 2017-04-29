@@ -43,7 +43,7 @@ export class Store {
         // Add new state domain initializations here
         this.domains = {
             currency: new CurrencyStore(state && state.currency),
-            status: new StatusStore(),
+            status: new StatusStore(state && state.status),
             router: new RouterStore(state && state.router)
         };
     }
@@ -56,4 +56,13 @@ export class Store {
 
         return serialized;
     }
+}
+
+let store: Store;
+export function useStore(s: Store) {
+    store = s;
+}
+
+export function getStore() {
+    return store;
 }

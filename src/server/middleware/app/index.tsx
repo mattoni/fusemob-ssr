@@ -8,7 +8,7 @@ import { Store } from "stores";
 import { IRouterState } from "stores/router";
 import { initStyles } from "utils/styles";
 import { ServerHTML } from "./server-html";
-import { Routes, NotFound } from "server/routing";
+import { Routes, NotFound } from "routing";
 
 // Configure mobx for rendering on the server
 useStaticRendering(true);

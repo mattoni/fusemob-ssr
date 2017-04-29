@@ -6,6 +6,7 @@ export interface IRouterState {
     routes: RouteConfig[];
 
     route?: string;
+    transitioning?: boolean;
     lastRoute?: string;
     finishedFirstLoad?: boolean;
     oldPath?: string;
@@ -20,6 +21,7 @@ export class RouterStore {
         routes: [],
 
         route: undefined,
+        transitioning: true,
         lastRoute: undefined,
         finishedFirstLoad: false,
         oldPath: undefined
@@ -43,6 +45,10 @@ export class RouterStore {
 
     public get lastRoute() {
         return this.state.lastRoute;
+    }
+
+    public get isTransitioning() {
+        return this.state.transitioning;
     }
 
     public get finishedFirstLoad() {
@@ -100,6 +106,15 @@ export class RouterStore {
         this.state.oldPath = path;
     }
 
+    @action
+    public setTransitioning(t: boolean) {
+        if (!this.finishedFirstLoad) {
+            return;
+        }
+
+        this.state.transitioning = t;
+    }
+
     public serialize() {
         return toJS(this.state);
     }
@@ -111,5 +126,6 @@ export class RouterStore {
     @action
     private finishFirstLoad() {
         this.state.finishedFirstLoad = true;
+        this.state.transitioning = false;
     }
 }

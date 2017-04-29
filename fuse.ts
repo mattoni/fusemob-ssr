@@ -101,7 +101,7 @@ Sparky.task("options", () => {
 
                 CSSPlugin({
                     group: "css/bundle.css",
-                    outFile: `${directory.outFolder}/css/bundle.css` as any,
+                    outFile: `${directory.outFolder}/public/css/bundle.css` as any,
                     inject: false,
                     minify: env_vars.NODE_ENV === "production"
                 })
@@ -114,7 +114,7 @@ Sparky.task("options", () => {
                 }),
                 CSSPlugin({
                     group: "css/bundle.css",
-                    outFile: `${directory.outFolder}/css/bundle.css`,
+                    outFile: `${directory.outFolder}/public/css/bundle.css`,
                     inject: false,
                     minify: env_vars.NODE_ENV === "production"
                 })

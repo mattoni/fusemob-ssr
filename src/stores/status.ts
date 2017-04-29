@@ -2,6 +2,7 @@ import { observable, action, toJS } from "mobx";
 
 interface IStatusState {
     status: number;
+    client: boolean;
 }
 
 /**
@@ -9,11 +10,22 @@ interface IStatusState {
  */
 export class StatusStore {
     @observable public readonly state: IStatusState = {
-        status: 200
+        status: 200,
+        client: false
     };
+
+    constructor(state?: IStatusState) {
+        if (state) {
+            this.state = state;
+        }
+    }
 
     public get status() {
         return this.state.status;
+    }
+
+    public get client() {
+        return this.state.client;
     }
 
     @action
