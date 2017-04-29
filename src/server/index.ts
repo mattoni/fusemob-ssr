@@ -7,21 +7,15 @@ const app = express();
 
 // Basic settings
 const host = process.env.HOST || "localhost";
-const port = 3000;
+const port = 8080;
 
 // Hide this, could be security risk
 app.disable("x-powered-by");
 
 // Serve static files
-const statics = path.resolve("./server-build/public");
+const statics = path.resolve("./build/public");
 app.use(express.static(statics));
 
-app.get("/vendor.js", (req, res) => {
-    res.sendFile(path.resolve("./server-build/js/vendor.js"));
-});
-app.get("/bundle.js", (req, res) => {
-    res.sendFile(path.resolve("./server-build/js/bundle.js"));
-});
 // Handle requests to pages
 app.get("*", appMiddleware);
 

@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "yarn cache clean && yarn install && ts-node fuse server-start"
+        "start": "yarn cache clean && yarn install && ts-node fuse"
     },
     "keywords": [
         "react",

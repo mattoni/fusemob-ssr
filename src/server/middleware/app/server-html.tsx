@@ -37,6 +37,8 @@ export function ServerHTML(props: IServerHTMLProps) {
         <Html
             appString={appString}
             description={description}
-            bodyElements={formattedBodyElements} />
+            bodyElements={formattedBodyElements}
+            bundle={<script src="/js/bundle.js" />}
+            vendor={<script src="/js/vendor.js" />} />
     );
 }

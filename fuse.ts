@@ -32,23 +32,22 @@ let env_vars: EnvVars = {
     YEAR: new Date().getFullYear()
 };
 
-let server = false;
-let bundle: Bundle;
+let serverBundle: Bundle;
+let clientBundle: Bundle;
 let fuse: FuseBox;
 let options: FuseBoxOptions;
-let build: string;
 
 const directory = {
     homeDir: "src",
-    outFolder: "server-build",
+    outFolder: "build",
     js: "js"
 };
 
-Sparky.task("server-start", ["clean", "version-file", "setup-server", "options", "build", "start"], () => {
+Sparky.task("default", ["clean", "version-file", "options", "build", "start"], () => {
     //
 });
 
-Sparky.task("server-build", ["set-prod", "clean", "version-file", "setup-server", "options", "build"], () => {
+Sparky.task("server-build", ["set-prod", "clean", "version-file", "options", "build"], () => {
     //
 });
 
@@ -59,19 +58,12 @@ Sparky.task("set-prod", () => {
 Sparky.task("clean", () => Sparky.src(`${directory.outFolder}/*`).clean(`${directory.outFolder}`));
 
 Sparky.task("version-file", () => {
-    build = path.join(__dirname, directory.outFolder);
-    const versionFilePath = path.join(build, "version.json");
-    fs.mkdirSync(build);
+    const outputDir = path.join(__dirname, directory.outFolder);
+    const pubDir = path.join(outputDir, "public");
+    const versionFilePath = path.join(pubDir, "version.json");
+    fs.mkdirSync(outputDir);
+    fs.mkdirSync(pubDir);
     fs.writeFileSync(versionFilePath, JSON.stringify({ version: env_vars.VERSION }, undefined, 4));
-});
-
-Sparky.task("setup-server", () => {
-    server = true;
-});
-
-Sparky.task("setup-client", () => {
-    server = false;
-    directory.outFolder = "client-build";
 });
 
 Sparky.task("options", () => {
@@ -91,7 +83,7 @@ Sparky.task("options", () => {
         hash: env_vars.NODE_ENV === "production",
         plugins: [
             TypeCheckPlugin({
-                bundles: [`${directory.js}/bundle`],
+                bundles: [`${directory.js}/server`, `public/${directory.js}/bundle`],
                 quit: env_vars.NODE_ENV === "production",
             }),
             [
@@ -136,8 +128,6 @@ Sparky.task("options", () => {
             EnvPlugin(env_vars),
         ]
     };
-
-    options["serverBundle"] = server;
 });
 
 Sparky.task("build", () => {
@@ -149,17 +139,18 @@ Sparky.task("build", () => {
 
     fuse = FuseBox.init(options);
     // Bundle
-    if (server) {
-        bundle = fuse.bundle(`${directory.js}/bundle`).instructions(` > [server/index.ts]`);
-        fuse.bundle(`${directory.js}/vendor`).instructions(" ~ server/index.ts");
-    } else {
-        bundle = fuse.bundle(`${directory.js}/bundle`).instructions(` > [server/index.ts]`);
-        fuse.bundle(`${directory.js}/vendor`).instructions(" ~ server/index.ts");
-    }
+    serverBundle = fuse.bundle(`${directory.js}/server`).instructions(` > [server/index.ts]`);
+    clientBundle = fuse.bundle(`public/${directory.js}/bundle`).instructions(` > [client/index.tsx]`);
+    fuse.bundle(`public/${directory.js}/vendor`).instructions(" ~ client/index.tsx");
     fuse.run();
 });
 
 Sparky.task("start", () => {
-    bundle.completed(proc => proc.start());
-    server ? bundle.watch("server/**") : bundle.watch("client/**");
+    serverBundle.completed(proc => proc.start());
+
+    if (env_vars.NODE_ENV === "development") {
+        fuse.dev({ hmr: true });
+        serverBundle.watch("server/**");
+        clientBundle.hmr().watch();
+    }
 });
