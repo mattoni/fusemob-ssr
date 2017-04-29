@@ -22,9 +22,9 @@ export async function appMiddleware(req: Request, res: Response) {
     };
     const store = new Store({router: routeConfig});
     store.domains.router.addRoute(NotFound(store.domains));
-    store.domains.router.init();
+    await store.domains.router.init();
 
-    const app = (
+    const app = renderToString(
         <Provider {...store.domains}>
             <AppContainer />
         </Provider>
@@ -34,7 +34,7 @@ export async function appMiddleware(req: Request, res: Response) {
     const html = renderToStaticMarkup(
         <ServerHTML
             initialState={store.serialize()}
-            appString={renderToString(app)} />,
+            appString={app} />
     );
 
     res.status(store.domains.status.status).send(`<!DOCTYPE html>${html}`);
