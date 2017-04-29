@@ -3,13 +3,16 @@ import * as React from "react";
 import { setStatefulModules } from "fuse-box/modules/fuse-hmr";
 import { Provider } from "mobx-react";
 import * as ReactDOM from "react-dom";
-import { IRenderedStates, Store } from "../stores";
+import { IRenderedStates, Store } from "stores";
 import { AppContainer } from "views";
 import "./styles";
 
 // These are the vars we stashed on the window
 // Use Fusebox to pull them in dynamically
 const states: IRenderedStates = require("~/rendered/state.js");
+if (states.stores.router) {
+    states.stores.router.config.type = "browser";
+}
 
 const store = new Store(states.stores);
 

@@ -44,7 +44,7 @@ export class Store {
         this.domains = {
             currency: new CurrencyStore(state && state.currency),
             status: new StatusStore(),
-            router: new RouterStore([], { type: "mem" })
+            router: new RouterStore(state && state.router)
         };
     }
 

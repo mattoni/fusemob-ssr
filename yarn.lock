@@ -43,6 +43,12 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-scroll@^0.0.31":
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/@types/react-scroll/-/react-scroll-0.0.31.tgz#1bb26bfd9f595da6403c2f13c2f9a3ed4d2929fa"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^15.0.15":
   version "15.0.15"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.15.tgz#c386d6906177c5ddaa5804e7f215010d77c33caf"
@@ -1645,7 +1651,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.4:
+prop-types@^15.5.4, prop-types@^15.5.8:
   version "15.5.8"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.8.tgz#6b7b2e141083be38c8595aa51fc55775c7199394"
   dependencies:
@@ -1706,6 +1712,13 @@ react-helmet@^5.0.3:
     object-assign "^4.1.1"
     prop-types "^15.5.4"
     react-side-effect "^1.1.0"
+
+react-scroll@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/react-scroll/-/react-scroll-1.5.2.tgz#f10f14840d3138a121d2c0f04933bbfee4193975"
+  dependencies:
+    object-assign "^4.1.1"
+    prop-types "^15.5.8"
 
 react-side-effect@^1.1.0:
   version "1.1.0"

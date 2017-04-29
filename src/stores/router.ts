@@ -1,11 +1,13 @@
 import { observable, action, toJS } from "mobx";
 import { Router, RouteConfig, RouterConfig } from "yester";
 
-interface IRouterState {
-    route: string | undefined;
-    transitioning: boolean;
-    lastRoute: string | undefined;
-    finishedFirstLoad: boolean;
+export interface IRouterState {
+    config: RouterConfig;
+    routes: RouteConfig[];
+
+    route?: string;
+    lastRoute?: string;
+    finishedFirstLoad?: boolean;
     oldPath?: string;
 }
 
@@ -14,16 +16,21 @@ interface IRouterState {
  */
 export class RouterStore {
     @observable public readonly state: IRouterState = {
+        config: { type: "mem" },
+        routes: [],
+
         route: undefined,
-        transitioning: true,
         lastRoute: undefined,
         finishedFirstLoad: false,
         oldPath: undefined
     };
 
     private router: Router;
-    constructor(routes: RouteConfig[], config: RouterConfig) {
-        this.router = new Router(routes, config);
+    constructor(state?: IRouterState) {
+        if (state) {
+            this.state = state;
+        }
+        this.router = new Router(this.state.routes, this.state.config);
     }
 
     public get route() {
@@ -36,10 +43,6 @@ export class RouterStore {
 
     public get lastRoute() {
         return this.state.lastRoute;
-    }
-
-    public get isTransitioning() {
-        return this.state.transitioning;
     }
 
     public get finishedFirstLoad() {
@@ -63,6 +66,12 @@ export class RouterStore {
             return;
         }
         this.router.handleAnchorClick(e, replace, pathOverride);
+    }
+
+    @action
+    public addRoute(route: RouteConfig) {
+        this.state.routes.push(route);
+        this.router.routes.push(route);
     }
 
     public async init(preload?: () => Promise<void>) {
@@ -91,15 +100,6 @@ export class RouterStore {
         this.state.oldPath = path;
     }
 
-    @action
-    public setTransitioning(t: boolean) {
-        if (!this.finishedFirstLoad) {
-            return;
-        }
-
-        this.state.transitioning = t;
-    }
-
     public serialize() {
         return toJS(this.state);
     }
@@ -111,6 +111,5 @@ export class RouterStore {
     @action
     private finishFirstLoad() {
         this.state.finishedFirstLoad = true;
-        this.state.transitioning = false;
     }
 }

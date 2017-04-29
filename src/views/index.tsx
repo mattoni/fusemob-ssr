@@ -8,7 +8,6 @@ import { NotFound, Route } from "components/routing";
 interface AppContainerProps {
     router?: IStores["router"];
 }
-
 @inject((stores: IStores) => ({
     router: stores.router
 }))

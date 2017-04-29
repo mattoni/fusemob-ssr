@@ -73,6 +73,7 @@ Sparky.task("options", () => {
         alias: {
             client: "~/client",
             components: "~/components",
+            routing: "~/routing",
             server: "~/server",
             stores: "~/stores",
             utils: "~/utils",
