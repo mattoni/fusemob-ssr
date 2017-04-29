@@ -47,7 +47,7 @@ Sparky.task("default", ["clean", "version-file", "options", "build", "start"], (
     //
 });
 
-Sparky.task("server-build", ["set-prod", "clean", "version-file", "options", "build"], () => {
+Sparky.task("start-prod", ["set-prod", "clean", "version-file", "options", "build", "start"], () => {
     //
 });
 

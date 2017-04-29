@@ -5,7 +5,9 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "yarn cache clean && yarn install && ts-node fuse"
+        "prebuild": "yarn cache clean && yarn install && npm rebuild node-sass",
+        "start-dev": "yarn prebuild && ts-node fuse",
+        "start-prod": "yarn prebuild && ts-node fuse start-prod"
     },
     "keywords": [
         "react",
@@ -28,6 +30,7 @@
         "mobx-react": "^4.1.3",
         "path": "^0.12.7",
         "react": "^15.4.2",
+        "react-async-component": "^1.0.0-beta.3",
         "react-dom": "^15.4.2",
         "react-helmet": "^5.0.3",
         "react-scroll": "^1.5.2",

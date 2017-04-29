@@ -75,9 +75,11 @@ export class RouterStore {
     }
 
     @action
-    public addRoute(route: RouteConfig) {
-        this.state.routes.push(route);
-        this.router.routes.push(route);
+    public addRoute(...routes: RouteConfig[]) {
+        routes.forEach(r => {
+            this.state.routes.push(r);
+            this.router.routes.push(r);
+        });
     }
 
     public async init(preload?: () => Promise<void>) {

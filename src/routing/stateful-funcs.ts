@@ -1,6 +1,7 @@
 import { runInAction } from "mobx";
 import { forTimeToPass } from "utils";
 import { IStores } from "stores";
+import { links } from "routing";
 import * as Scroll from "react-scroll";
 
 interface TransitionOptions {
@@ -36,7 +37,11 @@ export async function transition(options: TransitionOptions, ...cb: ((m: IStores
         promises.push(forTimeToPass(500));
     }
 
-    await promises;
+    try {
+        await promises;
+    } catch (e) {
+        return { redirect: links.home() };
+    }
 
     if (status.client) {
         router.setTransitioning(false);
@@ -52,4 +57,6 @@ export async function transition(options: TransitionOptions, ...cb: ((m: IStores
     }
 
     router.setOldPath(options.route);
+
+    return;
 }

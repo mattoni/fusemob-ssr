@@ -3,6 +3,7 @@ import * as React from "react";
 import { Provider } from "mobx-react";
 import * as ReactDOM from "react-dom";
 import { IRenderedStates, Store, useStore } from "stores";
+import { Routes } from "routing";
 import { AppContainer } from "views";
 import "./styles";
 
@@ -18,6 +19,8 @@ if (states.stores.status) {
 }
 
 const store = new Store(states.stores);
+store.domains.router.addRoute(...Routes(store.domains));
+store.domains.router.init();
 
 async function renderApp() {
     const app = (
