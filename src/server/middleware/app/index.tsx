@@ -5,6 +5,7 @@ import { Provider, useStaticRendering } from "mobx-react";
 import { AppContainer } from "views";
 import { renderToStaticMarkup, renderToString } from "react-dom/server";
 import { Store } from "stores";
+import { RouterStore } from "stores/router";
 import { IRouterState } from "stores/router";
 import { initStyles } from "utils/styles";
 import { ServerHTML } from "./server-html";
@@ -15,15 +16,16 @@ useStaticRendering(true);
 initStyles();
 
 export async function appMiddleware(req: Request, res: Response) {
+    const store = new Store();
+
     const routeConfig: IRouterState = {
-        routes: [],
+        routes: Routes(store.domains),
         config: {type: "mem"}
     };
+    const router = new RouterStore(routeConfig);
+    store.useStore({router: router});
 
-    const store = new Store({router: routeConfig});
-    store.domains.router.addRoute(...Routes(store.domains));
     await store.domains.router.init();
-
     const app = renderToString(
         <Provider {...store.domains}>
             <AppContainer />

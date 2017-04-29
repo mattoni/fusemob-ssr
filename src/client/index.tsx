@@ -3,6 +3,7 @@ import * as React from "react";
 import { Provider } from "mobx-react";
 import * as ReactDOM from "react-dom";
 import { IRenderedStates, Store, useStore } from "stores";
+import { IRouterState, RouterStore } from "stores/router";
 import { Routes } from "routing";
 import { AppContainer } from "views";
 import "./styles";
@@ -10,16 +11,20 @@ import "./styles";
 // These are the vars we stashed on the window
 // Use Fusebox to pull them in dynamically
 const states: IRenderedStates = require("~/rendered/state.js");
-if (states.stores.router) {
-    states.stores.router.config.type = "browser";
-}
 
 if (states.stores.status) {
     states.stores.status.client = true;
 }
 
 const store = new Store(states.stores);
-store.domains.router.addRoute(...Routes(store.domains));
+
+const routeConfig: IRouterState = {
+    routes: Routes(store.domains),
+    config: { type: "browser" }
+};
+const router = new RouterStore(routeConfig);
+store.useStore({ router: router });
+
 store.domains.router.init();
 
 async function renderApp() {

@@ -14,8 +14,8 @@ export class AppContainer extends React.Component<{}, {}> {
                     <title>FuseMob SSR</title>
                 </Helmet>
                 <Header />
-                <Route path="*" component={NotFound} />
                 <AboutRoutes />
+                <Route path="*" component={NotFound} />
             </section>
         );
     }

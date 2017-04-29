@@ -1,20 +1,17 @@
 import * as React from "react";
-import { asyncComponent } from "react-async-component";
-import { resolveModule } from "utils/resolveModule";
 import { links } from "routing";
+import { Helmet } from "react-helmet";
 import { Route } from "components/routing";
-
-const AsyncAbout = asyncComponent({
-    resolve: async () => resolveModule("about"), // Need to load module dynamically here
-    ssrMode: "boundary",
-    name: "AsyncAbout",
-});
+import { About } from "./about";
 
 export class AboutRoutes extends React.Component<{}, {}> {
     public render() {
         return (
             <div>
-                <Route component={AsyncAbout} path={links.about()} />
+                <Helmet>
+                    <title>About</title>
+                </Helmet>
+                <Route component={About} path={links.about()} />
             </div>
         );
     }

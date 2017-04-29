@@ -3,5 +3,6 @@
  */
 export const links = {
     home: () => `/`,
-    about: () => "/about"
+    about: () => "/about",
+    currency: () => "/currency"
 };

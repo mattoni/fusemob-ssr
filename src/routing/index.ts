@@ -4,6 +4,7 @@ import { transition } from "./stateful-funcs";
 import { links } from "./links";
 import { RouteConfig } from "yester";
 import { IStores } from "stores";
+import { routes as AboutRoutes } from "views/about/routes";
 
 export type RouteFunc = (stores: IStores) => RouteConfig;
 
@@ -30,6 +31,7 @@ function notFound(stores: IStores): RouteConfig {
 
 export function Routes(stores: IStores): RouteConfig[] {
     return [
+        ...AboutRoutes(stores),
         notFound(stores)
     ];
 }

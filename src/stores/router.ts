@@ -74,14 +74,6 @@ export class RouterStore {
         this.router.handleAnchorClick(e, replace, pathOverride);
     }
 
-    @action
-    public addRoute(...routes: RouteConfig[]) {
-        routes.forEach(r => {
-            this.state.routes.push(r);
-            this.router.routes.push(r);
-        });
-    }
-
     public async init(preload?: () => Promise<void>) {
         if (this.state.finishedFirstLoad) {
             return;

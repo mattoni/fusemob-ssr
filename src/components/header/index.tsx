@@ -2,6 +2,7 @@
 import * as React from "react";
 import { percent, rem } from "csx";
 import { Link } from "components/routing";
+import { links } from "routing";
 import { style } from "typestyle";
 
 const navClass = style({
@@ -40,9 +41,9 @@ const listClass = style({
 export const Header = () => (
     <nav className={navClass}>
         <ul className={listClass}>
-            <li><Link path ="/">Home</Link></li>
-            <li><Link path="/about">About</Link></li>
-            <li><Link path="/currency">Currency</Link></li>
+            <li><Link path ={links.home()}>Home</Link></li>
+            <li><Link path={links.about()}>About</Link></li>
+            <li><Link path={links.currency()}>Currency</Link></li>
             <li><Link path="/notreal">NotALink</Link></li>
         </ul>
     </nav>

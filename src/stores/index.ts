@@ -48,6 +48,15 @@ export class Store {
         };
     }
 
+    public useStore(stores: Partial<IStores>) {
+        for (const key in stores) {
+            const store = stores[key];
+            if (store) {
+                this.domains[key] = store;
+            }
+        }
+    }
+
     public serialize() {
         const serialized: ISerializedState = {};
         for (const i in this.domains) {
