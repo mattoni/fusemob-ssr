@@ -26,8 +26,6 @@ if (routerState) {
 const store = new Store(states.stores);
 useStore(store);
 
-console.log(store.domains.router);
-
 store.domains.router.init();
 
 async function renderApp() {
