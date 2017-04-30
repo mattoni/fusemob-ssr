@@ -2,6 +2,7 @@ import * as Chalk from "chalk";
 import * as express from "express";
 import * as path from "path";
 import { appMiddleware } from "./middleware";
+import "./process.js";
 
 const app = express();
 
