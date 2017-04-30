@@ -82,6 +82,7 @@ Sparky.task("options", () => {
         },
         cache: env_vars.NODE_ENV !== "production",
         hash: env_vars.NODE_ENV === "production",
+        sourceMaps: env_vars.NODE_ENV !== "production",
         plugins: [
             TypeCheckPlugin({
                 bundles: [`${directory.js}/server`, `public/${directory.js}/bundle`],

@@ -74,7 +74,7 @@ export class RouterStore {
         this.router.handleAnchorClick(e, replace, pathOverride);
     }
 
-    public async init(preload?: () => Promise<void>) {
+    public async init(initialRoute?: string, preload?: () => Promise<void>) {
         if (this.state.finishedFirstLoad) {
             return;
         }
@@ -83,7 +83,7 @@ export class RouterStore {
             await preload();
         }
 
-        await this.router.init();
+        await this.router.init(initialRoute);
 
         // After initial render
         this.finishFirstLoad();
