@@ -1,13 +1,13 @@
 import * as React from "react";
 import { links } from "routing";
 import { Route } from "components/routing";
-import { Currency } from "./currency";
+import { Home } from "./home";
 
-export class CurrencyRoutes extends React.Component<{}, {}> {
+export class HomeRoutes extends React.Component<{}, {}> {
     public render() {
         return (
             <div>
-                <Route component={Currency} path={links.currency()} />
+                <Route component={Home} path={links.home()} />
             </div>
         );
     }

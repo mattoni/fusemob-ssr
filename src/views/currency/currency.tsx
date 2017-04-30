@@ -2,6 +2,7 @@ import { px } from "csx";
 import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { style } from "typestyle";
+import { Helmet } from "react-helmet";
 import { IStores } from "stores";
 
 const currencyClass = style({
@@ -29,6 +30,9 @@ export class Currency extends React.Component<ICurrencyProps, undefined> {
             : <span>USD -> JPY rate: $1 = <strong className={moneyClass}>¥{rate}</strong></span>;
         return (
             <div className={currencyClass}>
+                <Helmet>
+                    <title>Currency</title>
+                </Helmet>
                 {content}
             </div>
         );
