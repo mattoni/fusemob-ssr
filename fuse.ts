@@ -147,13 +147,13 @@ Sparky.task("build", () => {
 });
 
 Sparky.task("start", () => {
-    serverBundle.completed(proc => proc.start());
-
     if (env_vars.NODE_ENV === "development") {
         fuse.dev({ hmr: true });
         serverBundle.watch("server/**");
         clientBundle.hmr().watch();
     }
+
+    serverBundle.completed(proc => proc.start());
 });
 
 Sparky.task("run", () => fuse.run());

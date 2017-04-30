@@ -45,7 +45,5 @@ renderApp();
 import { setStatefulModules } from "fuse-box/modules/fuse-hmr";
 
 setStatefulModules((name) => {
-    // Add the things you think are stateful:
-    console.log(name, /stores/.test(name) || /client\/index/.test(name));
     return /stores/.test(name) || /client\/index/.test(name);
 });
