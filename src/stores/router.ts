@@ -88,8 +88,9 @@ export class RouterStore {
         if (initialRoute) {
             let inRoutes = false;
 
-            for (const key in this.state.routes) {
-                if (this.state.routes[key].$ === initialRoute) {
+            const state = this.serialize();
+            for (const key in state.routes) {
+                if (state.routes[key].$ === initialRoute) {
                     inRoutes = true;
                     break;
                 }
