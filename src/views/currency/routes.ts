@@ -1,18 +1,19 @@
 import { RouteFunc, links, transition } from "routing";
 import { IStores } from "stores";
 
-const about: RouteFunc = (stores) => {
-    const route = links.about();
+const currency: RouteFunc = (stores) => {
+    const route = links.currency();
+
     return {
         $: route,
         enter: () => transition({
             route: route,
             stores: stores,
-            nav: ["about"]
-        })
+            nav: ["currency"]
+        }, () => stores.currency.fetchRates())
     };
 };
 
 export const routes = (stores: IStores) => ([
-    about(stores),
+    currency(stores)
 ]);

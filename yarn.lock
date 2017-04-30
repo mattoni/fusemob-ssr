@@ -2362,9 +2362,9 @@ yargs@~3.10.0:
     decamelize "^1.0.0"
     window-size "0.1.0"
 
-yester@0.10.0-dev.11:
-  version "0.10.0-dev.11"
-  resolved "https://registry.yarnpkg.com/yester/-/yester-0.10.0-dev.11.tgz#bb463278cbf7b813410215ee233add4cbab9c638"
+yester@0.10.0-dev.12:
+  version "0.10.0-dev.12"
+  resolved "https://registry.yarnpkg.com/yester/-/yester-0.10.0-dev.12.tgz#307f597d95af7c8e8b5eab33e209e06283b2d60a"
   dependencies:
     history "^4.6.1"
 

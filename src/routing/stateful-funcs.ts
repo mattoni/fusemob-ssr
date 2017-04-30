@@ -9,13 +9,15 @@ interface TransitionOptions {
     stores: IStores;
 }
 
+type TransitionFunc = (m: IStores) => Promise<any>;
+
 /**
  * Helper function to aid in transitioning between routes
  * @param route 
  * @param enter 
  * @param cb 
  */
-export async function transition(options: TransitionOptions, ...cb: ((m: IStores) => Promise<any>)[]) {
+export async function transition(options: TransitionOptions, ...cb: TransitionFunc[]) {
     const { router, status } = options.stores;
 
     // Make sure route change and transition state
@@ -36,7 +38,7 @@ export async function transition(options: TransitionOptions, ...cb: ((m: IStores
         promises.push(forTimeToPass(500));
     }
 
-    await promises;
+    await Promise.all(promises);
 
     if (status.client) {
         router.setTransitioning(false);

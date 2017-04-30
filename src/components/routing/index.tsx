@@ -4,7 +4,6 @@ export * from "./notfound";
 // tslint:disable-next-line:no-unused-variable
 import * as React from "react";
 import { Component, } from "react";
-import { LoadingIcon } from "components/loading-icon";
 import { observer, inject } from "mobx-react";
 import { IStores } from "stores";
 
@@ -32,7 +31,7 @@ export class Route extends Component<RouteProps, {}> {
         }
         
         if (this.shouldShowLoader()) {
-            return <LoadingIcon />;
+            return <span>Loading...</span>;
         }
 
         return <Component />;

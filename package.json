@@ -36,7 +36,7 @@
         "react-scroll": "^1.5.2",
         "tslib": "^1.6.0",
         "typestyle": "^1.2.0",
-        "yester": "0.10.0-dev.11"
+        "yester": "0.10.0-dev.12"
     },
     "devDependencies": {
         "@types/chalk": "^0.4.31",

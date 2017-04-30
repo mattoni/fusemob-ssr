@@ -85,6 +85,10 @@ export class RouterStore {
 
         await this.router.init(initialRoute);
 
+        if (initialRoute) {
+            this.setRoute(initialRoute);
+        }
+
         // After initial render
         this.finishFirstLoad();
     }

@@ -18,13 +18,18 @@ if (states.stores.status) {
 
 const store = new Store(states.stores);
 
+let triggerOnInit = states.stores.router && states.stores.router.finishedFirstLoad !== true;
+
 const routeConfig: IRouterState = {
     routes: Routes(store.domains),
-    config: { type: "browser" }
+    config: {
+        type: "browser",
+        triggerOnInit: triggerOnInit
+    }
 };
+
 const router = new RouterStore(routeConfig);
 store.useStore({ router: router });
-
 store.domains.router.init();
 
 async function renderApp() {
