@@ -1,0 +1,19 @@
+import { RouteFunc, links, transition } from "routing";
+import { IStores } from "stores";
+
+const home: RouteFunc = (stores) => {
+    const route = links.home();
+
+    return {
+        $: route,
+        enter: () => transition({
+            route: route,
+            stores: stores,
+            nav: ["home"]
+        })
+    };
+};
+
+export const routes = (stores?: IStores) => ([
+    home(stores)
+]);

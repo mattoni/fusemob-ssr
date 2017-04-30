@@ -2,12 +2,16 @@ import * as Chalk from "chalk";
 import * as express from "express";
 import * as path from "path";
 import { appMiddleware } from "./middleware";
+import "./process.js";
 
 const app = express();
 
 // Basic settings
+let port = 8080;
 const host = process.env.HOST || "localhost";
-const port = 3000;
+if (process.env.NODE_ENV === "production") {
+    port = 80;
+}
 
 // Hide this, could be security risk
 app.disable("x-powered-by");
@@ -24,7 +28,7 @@ app.listen(port, host, (err: any) => {
     if (err) {
         console.error(Chalk.bgRed(err));
     } else {
-        console.info(Chalk.black.bgGreen(
+        console.log(Chalk.black.bgGreen(
             `\n\n🐙  Listening at http://${host}:${port}\n`,
         ));
     }

@@ -2,8 +2,8 @@ import { px } from "csx";
 import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { style } from "typestyle";
-import { IStores } from "../../stores";
-import { withWork } from "../../utils/work";
+import { Helmet } from "react-helmet";
+import { IStores } from "stores";
 
 const currencyClass = style({
     padding: px(10),
@@ -17,6 +17,9 @@ interface ICurrencyProps {
     currency?: IStores["currency"];
 }
 
+@inject((stores: IStores) => ({
+    currency: stores.currency
+}))
 @observer
 export class Currency extends React.Component<ICurrencyProps, undefined> {
     public render() {
@@ -27,17 +30,11 @@ export class Currency extends React.Component<ICurrencyProps, undefined> {
             : <span>USD -> JPY rate: $1 = <strong className={moneyClass}>¥{rate}</strong></span>;
         return (
             <div className={currencyClass}>
+                <Helmet>
+                    <title>Currency</title>
+                </Helmet>
                 {content}
             </div>
         );
     }
 }
-
-const work = withWork(Currency, async (props) => {
-    // console.log("CurrencyProps", props);
-    return props.currency ? props.currency.fetchRates() : null;
-});
-
-export default inject((stores: IStores) => ({
-    currency: stores.currency,
-}))(work);

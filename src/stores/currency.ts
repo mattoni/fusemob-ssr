@@ -1,4 +1,4 @@
-import { action, computed, observable, runInAction, toJS } from "mobx";
+import { action, observable, runInAction, toJS } from "mobx";
 
 interface ICurrencyState {
     rates: ICurrencyResponse | undefined;
@@ -13,7 +13,6 @@ interface ICurrencyResponse {
 }
 
 export class CurrencyStore {
-
     @observable public readonly state: ICurrencyState;
 
     constructor(state?: ICurrencyState) {
