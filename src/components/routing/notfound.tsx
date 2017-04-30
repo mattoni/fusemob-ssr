@@ -12,13 +12,6 @@ interface INotFoundProps {
 }))
 @observer
 export class NotFound extends React.Component<INotFoundProps, {}> {
-    public componentWillMount() {
-        const { statusStore } = this.props;
-        if (statusStore) {
-            statusStore.setStatus(404);
-        }
-    }
-
     public render() {
         return (
             <div>

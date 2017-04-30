@@ -12,6 +12,7 @@ function notFound(stores: IStores): RouteConfig {
     const run = () => transition(
         { route: "*", stores: stores },
         async () => {
+            stores.status.setStatus(404);
             stores.router.navigate(links.home());
         }
     );
