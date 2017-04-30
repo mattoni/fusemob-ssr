@@ -6,8 +6,11 @@ import { appMiddleware } from "./middleware";
 const app = express();
 
 // Basic settings
+let port = 8080;
 const host = process.env.HOST || "localhost";
-const port = 8080;
+if (process.env.NODE_ENV === "production") {
+    port = 80;
+}
 
 // Hide this, could be security risk
 app.disable("x-powered-by");

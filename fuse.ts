@@ -43,11 +43,11 @@ const directory = {
     js: "js"
 };
 
-Sparky.task("default", ["clean", "version-file", "options", "build", "start"], () => {
+Sparky.task("default", ["clean", "version-file", "options", "build", "start", "run"], () => {
     //
 });
 
-Sparky.task("start-prod", ["set-prod", "clean", "version-file", "options", "build", "start"], () => {
+Sparky.task("start-prod", ["set-prod", "clean", "version-file", "options", "build", "start", "run"], () => {
     //
 });
 
@@ -144,7 +144,6 @@ Sparky.task("build", () => {
     serverBundle = fuse.bundle(`${directory.js}/server`).instructions(` > [server/index.ts]`);
     clientBundle = fuse.bundle(`public/${directory.js}/bundle`).instructions(` > [client/index.tsx]`);
     fuse.bundle(`public/${directory.js}/vendor`).instructions(" ~ client/index.tsx");
-    fuse.run();
 });
 
 Sparky.task("start", () => {
@@ -156,3 +155,5 @@ Sparky.task("start", () => {
         clientBundle.hmr().watch();
     }
 });
+
+Sparky.task("run", () => fuse.run());
