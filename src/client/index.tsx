@@ -17,15 +17,20 @@ if (states.stores.status) {
 }
 
 const store = new Store(states.stores);
+const routerState = states.stores.router && states.stores.router;
 
-let triggerOnInit = states.stores.router && states.stores.router.finishedFirstLoad !== true;
+let triggerOnInit = true;
+if (routerState && routerState.finishedFirstLoad === true) {
+    triggerOnInit = false;
+}
 
 const routeConfig: IRouterState = {
     routes: Routes(store.domains),
     config: {
         type: "browser",
         triggerOnInit: triggerOnInit
-    }
+    },
+    route: routerState && routerState.route
 };
 
 const router = new RouterStore(routeConfig);
