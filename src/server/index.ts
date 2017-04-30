@@ -7,7 +7,7 @@ const app = express();
 
 // Basic settings
 const host = process.env.HOST || "localhost";
-const port = 3000;
+const port = 8080;
 
 // Hide this, could be security risk
 app.disable("x-powered-by");
@@ -24,7 +24,7 @@ app.listen(port, host, (err: any) => {
     if (err) {
         console.error(Chalk.bgRed(err));
     } else {
-        console.info(Chalk.black.bgGreen(
+        console.log(Chalk.black.bgGreen(
             `\n\n🐙  Listening at http://${host}:${port}\n`,
         ));
     }

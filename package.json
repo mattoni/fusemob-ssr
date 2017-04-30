@@ -5,13 +5,14 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "ts-node fuse.ts dev"
+        "prebuild": "yarn cache clean && yarn install && npm rebuild node-sass",
+        "start-dev": "yarn prebuild && ts-node fuse",
+        "start-prod": "yarn prebuild && ts-node fuse start-prod"
     },
     "keywords": [
         "react",
         "mobx",
         "typescript",
-        "react-router",
         "isomorphic",
         "fuse-box",
         "ssr"
@@ -29,8 +30,10 @@
         "mobx-react": "^4.1.3",
         "path": "^0.12.7",
         "react": "^15.4.2",
+        "react-async-component": "^1.0.0-beta.3",
         "react-dom": "^15.4.2",
-        "react-helmet": "^5.0.0",
+        "react-helmet": "^5.0.3",
+        "react-scroll": "^1.5.2",
         "tslib": "^1.6.0",
         "typestyle": "^1.2.0",
         "yester": "0.10.0-dev.11"
@@ -42,13 +45,16 @@
         "@types/node": "^7.0.8",
         "@types/react": "^15.0.15",
         "@types/react-dom": "^0.14.23",
-        "@types/react-helmet": "^0.0.28",
+        "@types/react-helmet": "^5.0.1",
+        "@types/react-scroll": "^0.0.31",
         "@types/rimraf": "^0.0.28",
         "fuse-box": "2.0.0-beta.",
+        "fuse-box-typechecker": "git://github.com/fuse-box/fuse-box-typechecker",
         "rimraf": "^2.6.1",
         "ts-node": "^2.1.0",
         "tslint": "^4.5.1",
         "tslint-react": "^2.5.0",
-        "typescript": "rc"
+        "typescript": "rc",
+        "uglify-js": "^2.8.22"
     }
 }
