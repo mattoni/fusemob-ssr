@@ -1,5 +1,3 @@
-export * from "./lazy";
-
 import { transition } from "./stateful-funcs";
 import { links } from "./links";
 import { RouteConfig } from "yester";
@@ -14,10 +12,7 @@ function notFound(stores: IStores): RouteConfig {
         $: "*",
         enter: () => transition(
             { route: "*", stores: stores },
-            async () => {
-                stores.status.setStatus(404);
-                stores.router.navigate(links.home());
-            }
+            async () => stores.status.setStatus(404)
         )
     };
 }

@@ -86,6 +86,19 @@ export class RouterStore {
         await this.router.init(initialRoute);
 
         if (initialRoute) {
+            let inRoutes = false;
+
+            for (const key in this.state.routes) {
+                if (this.state.routes[key].$ === initialRoute) {
+                    inRoutes = true;
+                    break;
+                }
+            }
+
+            if (!inRoutes) {
+                initialRoute = "*";
+            }
+
             this.setRoute(initialRoute);
         }
 
