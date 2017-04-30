@@ -23,9 +23,9 @@ export async function appMiddleware(req: Request, res: Response) {
         config: {type: "mem"}
     };
     const router = new RouterStore(routeConfig);
-    store.useStore({router: router});
-
+    store.useStores({router: router});
     await store.domains.router.init(req.path);
+
     const app = renderToString(
         <Provider {...store.domains}>
             <AppContainer />

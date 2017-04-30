@@ -1,12 +1,12 @@
 import { runInAction } from "mobx";
 import { forTimeToPass } from "utils";
-import { IStores } from "stores";
+import { IStores, getStore } from "stores";
 import * as Scroll from "react-scroll";
 
 interface TransitionOptions {
     route: string;
     nav?: string[];
-    stores: IStores;
+    stores?: IStores;
 }
 
 type TransitionFunc = (m: IStores) => Promise<any>;
@@ -18,7 +18,8 @@ type TransitionFunc = (m: IStores) => Promise<any>;
  * @param cb 
  */
 export async function transition(options: TransitionOptions, ...cb: TransitionFunc[]) {
-    const { router, status } = options.stores;
+    const stores = options.stores || getStore().domains;
+    const { router, status } = stores;
 
     // Make sure route change and transition state
     // are updated same cycle - prevents premature loading of components
@@ -30,7 +31,7 @@ export async function transition(options: TransitionOptions, ...cb: TransitionFu
     });
 
     const promises = [
-        ...cb.map(c => c(options.stores))
+        ...cb.map(c => c(stores))
     ];
 
     if (status.client) {

@@ -13,6 +13,6 @@ const about: RouteFunc = (stores) => {
     };
 };
 
-export const routes = (stores: IStores) => ([
+export const routes = (stores?: IStores) => ([
     about(stores),
 ]);

@@ -3,7 +3,6 @@ import * as React from "react";
 import { Provider } from "mobx-react";
 import * as ReactDOM from "react-dom";
 import { IRenderedStates, Store, useStore } from "stores";
-import { IRouterState, RouterStore } from "stores/router";
 import { Routes } from "routing";
 import { AppContainer } from "views";
 import "./styles";
@@ -16,25 +15,19 @@ if (states.stores.status) {
     states.stores.status.client = true;
 }
 
-const store = new Store(states.stores);
 const routerState = states.stores.router && states.stores.router;
-
-let triggerOnInit = true;
-if (routerState && routerState.finishedFirstLoad === true) {
-    triggerOnInit = false;
+if (routerState) {
+    routerState.config.triggerOnInit = routerState.finishedFirstLoad !== true;
+    routerState.finishedFirstLoad = false;
+    routerState.routes = Routes();
+    routerState.config.type = "browser";
 }
 
-const routeConfig: IRouterState = {
-    routes: Routes(store.domains),
-    config: {
-        type: "browser",
-        triggerOnInit: triggerOnInit
-    },
-    route: routerState && routerState.route
-};
+const store = new Store(states.stores);
+useStore(store);
 
-const router = new RouterStore(routeConfig);
-store.useStore({ router: router });
+console.log(store.domains.router);
+
 store.domains.router.init();
 
 async function renderApp() {
@@ -48,7 +41,6 @@ async function renderApp() {
 }
 
 renderApp();
-useStore(store);
 
 // Custom HMR, will forcefully reload if you edit a store file or
 // one listed under fullPaths - Keeps state in sync

@@ -48,7 +48,7 @@ export class Store {
         };
     }
 
-    public useStore(stores: Partial<IStores>) {
+    public useStores(stores: Partial<IStores>) {
         for (const key in stores) {
             const store = stores[key];
             if (store) {

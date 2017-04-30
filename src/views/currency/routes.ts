@@ -10,10 +10,10 @@ const currency: RouteFunc = (stores) => {
             route: route,
             stores: stores,
             nav: ["currency"]
-        }, () => stores.currency.fetchRates())
+        }, (s) => s.currency.fetchRates())
     };
 };
 
-export const routes = (stores: IStores) => ([
+export const routes = (stores?: IStores) => ([
     currency(stores)
 ]);
