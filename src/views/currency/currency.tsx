@@ -25,15 +25,12 @@ export class Currency extends React.Component<ICurrencyProps, undefined> {
     public render() {
         const { currency } = this.props;
         const rate = currency && currency.rates ? currency.rates.rates["JPY"] : "Not Found";
-        const content = currency && currency.loading
-            ? "Loading..."
-            : <span>USD -> JPY rate: $1 = <strong className={moneyClass}>¥{rate}</strong></span>;
         return (
             <div className={currencyClass}>
                 <Helmet>
                     <title>Currency</title>
                 </Helmet>
-                {content}
+                USD -> JPY rate: $1 = <strong className={moneyClass}>¥{rate}</strong>
             </div>
         );
     }
