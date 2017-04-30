@@ -83,7 +83,10 @@ export class RouterStore {
             await preload();
         }
 
-        await this.router.init(initialRoute);
+        if (initialRoute) {
+            this.router.navigate(initialRoute, true);
+        }
+        await this.router.init();
 
         if (initialRoute) {
             let inRoutes = false;
