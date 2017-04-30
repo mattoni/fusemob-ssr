@@ -5,21 +5,14 @@ import { IStores } from "stores";
 const about: RouteFunc = (stores) => {
     const route = links.about();
 
-    const run = () => transition({
-        route: route,
-        stores: stores,
-        nav: ["about"]
-    });
-
     const config: RouteConfig = {
-        $: route
+        $: route,
+        enter: () => transition({
+            route: route,
+            stores: stores,
+            nav: ["about"]
+        })
     };
-
-    if (stores.status.client) {
-        config.enter = run;
-    } else {
-        config.beforeEnter = run;
-    }
 
     return config;
 };
