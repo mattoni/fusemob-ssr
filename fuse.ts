@@ -141,6 +141,7 @@ Sparky.task('build', () => {
     }
 
     fuse = FuseBox.init(options);
+    fuse.bundle(`public/${directory.js}/vendor`).instructions('~client/index.tsx');
     // Bundle
     bundle = fuse.bundle('ssr').splitConfig({
         browser: `/${directory.js}`,
@@ -157,8 +158,8 @@ Sparky.task('build', () => {
 
         bundle = bundle.split(bundleInfo.instructions, `${bundleName} > ${bundleInfo.entrypoint}`);
     }
-    bundle = bundle.split('client/**', 'client > client/index.tsx');
-    bundle.instructions(` > [server/index.ts] +process +client/** +[views/**/**.tsx] ~client/**`);
+    bundle = bundle.split('client/**', 'bundle > client/index.tsx');
+    bundle.instructions(` > [server/index.ts] +process +[views/**/**.tsx] +[client/**.tsx]`);
 });
 
 Sparky.task('start', () => {
