@@ -85,12 +85,12 @@ Sparky.task('options', () => {
         },
         cache: envVars.NODE_ENV !== 'production',
         hash: envVars.NODE_ENV === 'production',
-        sourceMaps: envVars.NODE_ENV !== 'production',
+        // sourceMaps: envVars.NODE_ENV !== 'production',
         plugins: [
-            TypeCheckPlugin({
-                bundles: [`${directory.js}/server`, `public/${directory.js}/bundle`],
-                quit: envVars.NODE_ENV === 'production',
-            }),
+            // TypeCheckPlugin({
+            //     bundles: [`${directory.js}/server`, `public/${directory.js}/bundle`],
+            //     quit: envVars.NODE_ENV === 'production',
+            // }),
             [
                 SassPlugin({
                     macros: { '~': `${directory.homeDir}/` },
@@ -151,7 +151,7 @@ Sparky.task('build', () => {
     clientBundle = fuse.bundle(`public/${directory.js}/bundle`);
     clientBundle.splitConfig({
         browser: `/${directory.js}`,
-        server: `build/public/${directory.js}`,
+        server: `./build/public/${directory.js}`,
         dest: `public/${directory.js}`,
     });
 
@@ -164,7 +164,7 @@ Sparky.task('build', () => {
 
         clientBundle = clientBundle.split(bundle.instructions, `${bundleName} > ${bundle.entrypoint}`);
     }
-    clientBundle.instructions(`> [client/index.tsx] + [views/**/**.tsx]`);
+    clientBundle.instructions(`> [client/index.tsx] + [views/**/**.{ts, tsx}]`);
 });
 
 Sparky.task('start', () => {

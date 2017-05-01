@@ -4,5 +4,5 @@
 export const links = {
     home: () => `/`,
     about: () => `/about`,
-    currency: () => `/currency`
+    currency: () => `/currency`,
 };

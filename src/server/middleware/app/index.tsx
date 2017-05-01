@@ -20,7 +20,7 @@ export async function appMiddleware(req: Request, res: Response) {
 
     const routeConfig: IRouterState = {
         routes: Routes(store.domains),
-        config: {type: 'mem'}
+        config: {type: 'mem'},
     };
     const router = new RouterStore(routeConfig);
     store.useStores({router});
@@ -31,7 +31,6 @@ export async function appMiddleware(req: Request, res: Response) {
             <AppContainer />
         </Provider>,
     );
-
 
     const html = renderToStaticMarkup(
         <ServerHTML

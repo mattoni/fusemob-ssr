@@ -1,4 +1,3 @@
-
 import { lazyLoad } from 'fuse-tools';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
@@ -23,6 +22,13 @@ interface IRouteState {
 }))
 @observer
 export class Route extends Component<IRouteProps, IRouteState> {
+    constructor() {
+        super();
+        this.state = {
+            AsyncComponent: undefined,
+        };
+    }
+
     public componentWillReceiveProps(nextProps: IRouteProps) {
         if (!nextProps.asyncComponent) {
             return;
@@ -33,6 +39,8 @@ export class Route extends Component<IRouteProps, IRouteState> {
 
     public render() {
         const { router, component: Component, asyncComponent } = this.props;
+
+        console.log('Rendering Route');
 
         if (!router) {
             console.warn('No router configured');
@@ -57,6 +65,10 @@ export class Route extends Component<IRouteProps, IRouteState> {
         }
 
         const { AsyncComponent } = this.state;
+        if (!this.state.AsyncComponent) {
+            return null;
+        }
+
         return <AsyncComponent /> || null;
     }
 
