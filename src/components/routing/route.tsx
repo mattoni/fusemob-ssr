@@ -31,6 +31,14 @@ export class Route extends Component<IRouteProps, IRouteState> {
         this.lazyLoad(nextProps.asyncComponent);
     }
 
+    public componentWillMount() {
+        if (!this.props.asyncComponent) {
+            return;
+        }
+
+        this.lazyLoad(this.props.asyncComponent);
+    }
+
     public render() {
         const { router, component: Component, asyncComponent } = this.props;
 

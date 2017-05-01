@@ -35,8 +35,7 @@ const envVars: IEnvVars = {
     YEAR: new Date().getFullYear(),
 };
 
-let serverBundle: Bundle;
-let clientBundle: Bundle;
+let bundle: Bundle;
 let fuse: FuseBox;
 let options: FuseBoxOptions;
 
@@ -85,10 +84,9 @@ Sparky.task('options', () => {
         },
         cache: envVars.NODE_ENV !== 'production',
         hash: envVars.NODE_ENV === 'production',
-        sourceMaps: envVars.NODE_ENV !== 'production',
         plugins: [
             TypeCheckPlugin({
-                bundles: [`${directory.js}/server`, `public/${directory.js}/bundle`],
+                bundles: ['ssr'],
                 quit: envVars.NODE_ENV === 'production',
             }),
             [
@@ -144,12 +142,7 @@ Sparky.task('build', () => {
 
     fuse = FuseBox.init(options);
     // Bundle
-    serverBundle = fuse.bundle(`${directory.js}/server`).instructions(` > [server/index.ts]`);
-    fuse.bundle(`public/${directory.js}/vendor`).instructions(' ~ client/index.tsx');
-
-
-    clientBundle = fuse.bundle(`public/${directory.js}/bundle`);
-    clientBundle.splitConfig({
+    bundle = fuse.bundle('ssr').splitConfig({
         browser: `/${directory.js}`,
         server: `build/public/${directory.js}`,
         dest: `public/${directory.js}`,
@@ -160,21 +153,22 @@ Sparky.task('build', () => {
         if (!asyncRoutes.hasOwnProperty(bundleName)) {
             continue;
         }
-        const bundle = asyncRoutes[bundleName as IAsyncRoutes];
+        const bundleInfo = asyncRoutes[bundleName as IAsyncRoutes];
 
-        clientBundle = clientBundle.split(bundle.instructions, `${bundleName} > ${bundle.entrypoint}`);
+        bundle = bundle.split(bundleInfo.instructions, `${bundleName} > ${bundleInfo.entrypoint}`);
     }
-    clientBundle.instructions(`> [client/index.tsx] + [views/**/**.tsx]`);
+    bundle = bundle.split('client/**', 'client > client/index.tsx');
+    bundle.instructions(` > [server/index.ts] +process +client/** +[views/**/**.tsx] ~client/**`);
 });
 
 Sparky.task('start', () => {
     if (envVars.NODE_ENV === 'development') {
         fuse.dev({ hmr: true, httpServer: false });
-        serverBundle.watch('server/**');
-        clientBundle.hmr().watch();
+        bundle.watch('server/**');
+        bundle.hmr().watch();
     }
 
-    serverBundle.completed((proc) => proc.start());
+    bundle.completed((proc) => proc.start());
 });
 
 Sparky.task('run', () => fuse.run());
