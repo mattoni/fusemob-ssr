@@ -1,5 +1,4 @@
 import { runInAction } from "mobx";
-import { forTimeToPass } from "utils";
 import { IStores, getStore } from "stores";
 import * as Scroll from "react-scroll";
 
@@ -33,11 +32,6 @@ export async function transition(options: TransitionOptions, ...cb: TransitionFu
     const promises = [
         ...cb.map(c => c(stores))
     ];
-
-    if (status.client) {
-        // extra delay to avoid loading screen instant flash
-        promises.push(forTimeToPass(500));
-    }
 
     await Promise.all(promises);
 

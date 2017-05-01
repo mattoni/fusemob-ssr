@@ -1,11 +1,9 @@
-import * as React from "react";
-import { Helmet } from "react-helmet";
-import { observer } from "mobx-react";
-import { Header } from "components/header";
-import { NotFound, Route } from "components/routing";
-import { AboutRoutes } from "./about";
-import { CurrencyRoutes } from "./currency";
-import { HomeRoutes } from "./home";
+import { Header } from 'components/header';
+import { NotFound, Route } from 'components/routing';
+import { observer } from 'mobx-react';
+import * as React from 'react';
+import { Helmet } from 'react-helmet';
+import { links } from 'routing';
 
 @observer
 export class AppContainer extends React.Component<{}, {}> {
@@ -16,10 +14,12 @@ export class AppContainer extends React.Component<{}, {}> {
                     <title>FuseMob SSR</title>
                 </Helmet>
                 <Header />
-                <AboutRoutes />
-                <CurrencyRoutes />
-                <HomeRoutes />
+
+                <Route path={links.home()} asyncComponent="home" />
+                <Route path={links.about()} asyncComponent="about" />
+                <Route path={links.currency()} asyncComponent="currency" />
                 <Route path="*" component={NotFound} />
+
             </section>
         );
     }

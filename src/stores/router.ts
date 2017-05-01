@@ -1,5 +1,5 @@
-import { observable, action, toJS } from "mobx";
-import { Router, RouteConfig, RouterConfig } from "yester";
+import { action, observable, toJS } from 'mobx';
+import { RouteConfig, Router, RouterConfig } from 'yester';
 
 export interface IRouterState {
     config: RouterConfig;
@@ -13,18 +13,18 @@ export interface IRouterState {
 }
 
 /**
- * Handles state of routing for route components. 
+ * Handles state of routing for route components.
  */
 export class RouterStore {
     @observable public readonly state: IRouterState = {
-        config: { type: "mem" },
+        config: { type: 'mem' },
         routes: [],
 
         route: undefined,
         transitioning: true,
         lastRoute: undefined,
         finishedFirstLoad: false,
-        oldPath: undefined
+        oldPath: undefined,
     };
 
     private router: Router;
@@ -100,7 +100,7 @@ export class RouterStore {
             }
 
             if (!inRoutes) {
-                initialRoute = "*";
+                initialRoute = '*';
             }
 
             this.setRoute(initialRoute);

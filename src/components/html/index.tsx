@@ -1,5 +1,5 @@
-import * as React from "react";
-import { getStyles } from "typestyle";
+import * as React from 'react';
+import { getStyles } from 'typestyle';
 
 
 interface IHtmlProps {

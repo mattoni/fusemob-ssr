@@ -1,19 +1,19 @@
 // tslint:disable-next-line:no-unused-variable
-import * as React from "react";
-import { inject } from "mobx-react";
-import { Component } from "react";
-import { IStores } from "stores";
+import { inject } from 'mobx-react';
+import * as React from 'react';
+import { Component } from 'react';
+import { IStores } from 'stores';
 
-export interface LinkProps extends React.HTMLProps<HTMLAnchorElement> {
+export interface ILinkProps extends React.HTMLProps<HTMLAnchorElement> {
     path: string;
     replace?: boolean;
-    router?: IStores["router"];
+    router?: IStores['router'];
 }
 
 @inject((stores: { router: IStores }) => ({
-    router: stores.router
+    router: stores.router,
 }))
-export class Link extends Component<LinkProps, {}> {
+export class Link extends Component<ILinkProps, {}> {
     public render() {
         const { path, router, replace, onClick, ...others } = this.props;
 
@@ -21,12 +21,17 @@ export class Link extends Component<LinkProps, {}> {
             <a
                 {...others}
                 href={path}
-                onClick={(e) => {
-                    if (onClick) {
-                        onClick(e);
-                    }
-                    router && router.handleAnchorClick(e.nativeEvent, replace, path);
-                }} />
+                onClick={this.handleClick} />
         );
+    }
+
+    private handleClick = (e: React.MouseEvent<any>) => {
+        const { path, router, replace, onClick, ...others } = this.props;
+
+        if (onClick) {
+            onClick(e);
+        }
+
+        return router && router.handleAnchorClick(e.nativeEvent, replace, path);
     }
 };

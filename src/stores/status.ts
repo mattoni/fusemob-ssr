@@ -1,4 +1,4 @@
-import { observable, action, toJS } from "mobx";
+import { action, observable, toJS } from 'mobx';
 
 interface IStatusState {
     status: number;
@@ -11,7 +11,7 @@ interface IStatusState {
 export class StatusStore {
     @observable public readonly state: IStatusState = {
         status: 200,
-        client: false
+        client: false,
     };
 
     constructor(state?: IStatusState) {

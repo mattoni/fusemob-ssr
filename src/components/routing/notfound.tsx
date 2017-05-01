@@ -1,10 +1,10 @@
-import * as React from "react";
-import { observer, inject } from "mobx-react";
-import { Helmet } from "react-helmet";
-import { IStores } from "stores";
+import { inject, observer } from 'mobx-react';
+import * as React from 'react';
+import { Helmet } from 'react-helmet';
+import { IStores } from 'stores';
 
 interface INotFoundProps {
-    statusStore?: IStores["status"];
+    statusStore?: IStores['status'];
 }
 
 @inject((stores: IStores) => ({

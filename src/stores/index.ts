@@ -1,9 +1,9 @@
-import "isomorphic-fetch";
-import { CurrencyStore } from "./currency";
-import { RouterStore } from "./router";
-import { StatusStore } from "./status";
+import 'isomorphic-fetch';
+import { CurrencyStore } from './currency';
+import { RouterStore } from './router';
+import { StatusStore } from './status';
 
-export interface Serializable {
+export interface ISerializable {
     serialize: () => any;
     state: any;
 }
@@ -15,7 +15,7 @@ export interface IStores {
     currency: CurrencyStore;
     status: StatusStore;
     router: RouterStore;
-    [key: string]: Serializable;
+    [key: string]: ISerializable;
 }
 
 /**
@@ -23,7 +23,7 @@ export interface IStores {
  * No need to modify this.
  */
 export type ISerializedState = {
-    [P in keyof IStores]?: IStores[P]["state"];
+    [P in keyof IStores]?: IStores[P]['state'];
 };
 
 /**
@@ -44,11 +44,12 @@ export class Store {
         this.domains = {
             currency: new CurrencyStore(state && state.currency),
             status: new StatusStore(state && state.status),
-            router: new RouterStore(state && state.router)
+            router: new RouterStore(state && state.router),
         };
     }
 
     public useStores(stores: Partial<IStores>) {
+        // tslint:disable-next-line:forin
         for (const key in stores) {
             const store = stores[key];
             if (store) {
@@ -59,6 +60,7 @@ export class Store {
 
     public serialize() {
         const serialized: ISerializedState = {};
+        // tslint:disable-next-line:forin
         for (const i in this.domains) {
             serialized[i] = this.domains[i].serialize();
         }
