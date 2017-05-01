@@ -156,15 +156,14 @@ Sparky.task('build', () => {
     });
 
     // Async splitting
-    // for (const bundleName in asyncRoutes) {
-    //     if (!asyncRoutes.hasOwnProperty(bundleName)) {
-    //         continue;
-    //     }
-    //     const bundle = asyncRoutes[bundleName as IAsyncRoutes];
+    for (const bundleName in asyncRoutes) {
+        if (!asyncRoutes.hasOwnProperty(bundleName)) {
+            continue;
+        }
+        const bundle = asyncRoutes[bundleName as IAsyncRoutes];
 
-    //     clientBundle = clientBundle.split(bundle.instructions, `${bundleName} > ${bundle.entrypoint}`);
-    // }
-    clientBundle = clientBundle.split('views/about/components/**', 'about > views/about/components/index.tsx');
+        clientBundle = clientBundle.split(bundle.instructions, `${bundleName} > ${bundle.entrypoint}`);
+    }
     clientBundle.instructions(`> [client/index.tsx] + [views/**/**.tsx]`);
 });
 

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 
 @observer
-export class Home extends React.Component<{}, undefined> {
+export default class Home extends React.Component<{}, {}> {
     public render() {
         return (
             <div>

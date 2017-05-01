@@ -21,7 +21,7 @@ interface ICurrencyProps {
     currency: stores.currency,
 }))
 @observer
-export class Currency extends React.Component<ICurrencyProps, undefined> {
+export default class Currency extends React.Component<ICurrencyProps, {}> {
     public render() {
         const { currency } = this.props;
         // tslint:disable-next-line:no-string-literal

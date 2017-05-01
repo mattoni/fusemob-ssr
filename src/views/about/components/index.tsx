@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { style } from 'typestyle';
 
 @observer
-export default class About extends React.Component<{}, undefined> {
+export default class About extends React.Component<{}, {}> {
     public render() {
         const aboutClass = style({
             padding: px(10),
