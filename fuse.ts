@@ -54,6 +54,10 @@ Sparky.task('start-prod', ['set-prod', 'clean', 'version-file', 'options', 'buil
     //
 });
 
+Sparky.task('prod-build', ['set-prod', 'clean', 'version-file', 'options', 'build', 'run'], () => {
+    //
+});
+
 Sparky.task('set-prod', () => {
     envVars.NODE_ENV = 'production';
 });
@@ -87,7 +91,7 @@ Sparky.task('options', () => {
         hash: envVars.NODE_ENV === 'production',
         plugins: [
             TypeCheckPlugin({
-                bundles: ['ssr'],
+                bundles: ['server'],
                 quit: envVars.NODE_ENV === 'production',
             }),
             [
@@ -168,6 +172,7 @@ Sparky.task('build', () => {
         serverBundle = serverBundle.split(bundleInfo.instructions, `${bundleName} > ${bundleInfo.entrypoint}`);
         clientBundle = clientBundle.split(bundleInfo.instructions, `${bundleName} > ${bundleInfo.entrypoint}`);
     }
+
     serverBundle.instructions(` > [server/index.ts] +process +[views/**/**.tsx]`);
     clientBundle.instructions(` > [client/index.tsx] +[views/**/**.tsx]`);
 });
@@ -182,4 +187,14 @@ Sparky.task('start', () => {
     serverBundle.completed((proc) => proc.start());
 });
 
-Sparky.task('run', () => fuse.run());
+Sparky.task('run', async () => {
+    const producer = await fuse.run();
+    const bundle = producer.bundles.get(`public/${directory.js}/bundle`);
+    const vendor = producer.bundles.get(`public/${directory.js}/vendor`);
+    const bundles = {
+        bundle: bundle!.context.output.lastGeneratedFileName,
+        vendor: vendor!.context.output.lastGeneratedFileName,
+    };
+    const outputDir = path.join(__dirname, directory.outFolder);
+    fs.writeFileSync(path.join(outputDir, 'bundles.json'), JSON.stringify(bundles));
+});

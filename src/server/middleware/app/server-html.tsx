@@ -1,8 +1,14 @@
 import { Html } from 'components/html';
+import * as path from 'path';
 import * as React from 'react';
 import { IRenderedStates, ISerializedState } from 'stores';
 
 const description = 'A server side rendering implementation featuring fuse-box and MobX';
+
+interface IBundleFiles {
+    bundle: string;
+    vendor: string;
+}
 
 interface IServerHTMLProps {
     initialState: ISerializedState;
@@ -19,6 +25,8 @@ const inlineScript = (body: string) => (
         dangerouslySetInnerHTML={{ __html: body }}
     />
 );
+
+const bundleFiles: IBundleFiles = require(path.resolve('./build/bundles.json'));
 
 export function ServerHTML(props: IServerHTMLProps) {
     const { initialState, appString } = props;
@@ -43,7 +51,7 @@ export function ServerHTML(props: IServerHTMLProps) {
             appString={appString}
             description={description}
             bodyElements={formattedBodyElements}
-            bundle={<script src="/js/bundle.js" />}
-            vendor={<script src="/js/vendor.js" />} />
+            bundle={`/js/${bundleFiles.bundle}`}
+            vendor={`/js/${bundleFiles.vendor}`} />
     );
 }

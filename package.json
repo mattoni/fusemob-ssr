@@ -7,7 +7,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "prebuild": "yarn cache clean && yarn install && npm rebuild node-sass",
         "start": "yarn prebuild && ts-node fuse",
-        "start-prod": "yarn prebuild && ts-node fuse start-prod"
+        "start-prod": "yarn prebuild && ts-node fuse start-prod",
+        "prod-build": "yarn prebuild && ts-node fuse prod-build"
     },
     "keywords": [
         "react",
