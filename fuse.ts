@@ -54,6 +54,10 @@ Sparky.task('start-prod', ['set-prod', 'clean', 'version-file', 'options', 'buil
     //
 });
 
+Sparky.task('prod-build', ['set-prod', 'clean', 'version-file', 'options', 'build', 'run'], () => {
+    //
+});
+
 Sparky.task('set-prod', () => {
     envVars.NODE_ENV = 'production';
 });

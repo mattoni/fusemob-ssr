@@ -9,7 +9,6 @@ const app = express();
 
 // Basic settings
 let port = 8080;
-const host = process.env.HOST || 'localhost';
 if (process.env.NODE_ENV === 'production') {
     port = 80;
 }
@@ -38,21 +37,33 @@ const chain = process.env.TLSCHAIN || 'current.chain';
 if (fs.existsSync(path.join(tlsDir, key))) {
     options.key = fs.readFileSync(path.join(tlsDir, key));
     options.spdy!.plain = false;
+    if (process.env.NODE_ENV === 'production') {
+        port = 443;
+        express().get('*', (req, res, next) => {
+            if (req.secure) {
+                next();
+            }
+            // tslint:disable-next-line:no-console
+            console.log(Chalk.black.bgCyan(
+                `\n\n🐙  Redirecting to https://${req.hostname}`,
+            ));
+            res.redirect(`https://${req.hostname}`);
+        }).listen(80);
+    }
 }
 
 if (fs.existsSync(path.join(tlsDir, chain))) {
-    options.key = fs.readFileSync(path.join(tlsDir, chain));
-    options.spdy!.plain = false;
+    options.cert = fs.readFileSync(path.join(tlsDir, chain));
 }
 
 // Start server
-spdy.createServer(options, app as any).listen(port, host, (err: any) => {
+spdy.createServer(options, app as any).listen(port, (err: any) => {
     if (err) {
         console.error(Chalk.bgRed(err));
     } else {
         // tslint:disable-next-line:no-console
         console.log(Chalk.black.bgGreen(
-            `\n\n🐙  Listening at http://${host}:${port}\n`,
+            `\n\n🐙  Listening at http${!options.spdy!.plain ? 's' : ''}://:${port}\n`,
         ));
     }
 });
