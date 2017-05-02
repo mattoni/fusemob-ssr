@@ -40,7 +40,7 @@ const listClass = style({
 export const Header = () => (
     <nav className={navClass}>
         <ul className={listClass}>
-            <li><Link path ={links.home()}>Home</Link></li>
+            <li><Link path={links.home()}>Home</Link></li>
             <li><Link path={links.about()}>About</Link></li>
             <li><Link path={links.currency()}>Currency</Link></li>
             <li><Link path="/notreal">NotALink</Link></li>

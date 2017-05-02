@@ -13,7 +13,7 @@ export class AppContainer extends React.Component<{}, {}> {
                 <Helmet>
                     <title>FuseMob SSR</title>
                 </Helmet>
-                
+
                 <Header />
 
                 <Route path={links.home()} asyncComponent="home" />

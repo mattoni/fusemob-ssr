@@ -35,7 +35,8 @@ const envVars: IEnvVars = {
     YEAR: new Date().getFullYear(),
 };
 
-let bundle: Bundle;
+let serverBundle: Bundle;
+let clientBundle: Bundle;
 let fuse: FuseBox;
 let options: FuseBoxOptions;
 
@@ -141,11 +142,19 @@ Sparky.task('build', () => {
     }
 
     fuse = FuseBox.init(options);
+
+    // Vendor bundle
     fuse.bundle(`public/${directory.js}/vendor`).instructions('~client/index.tsx');
-    // Bundle
-    bundle = fuse.bundle('ssr').splitConfig({
-        browser: `/${directory.js}`,
+
+    // Server Bundle
+    serverBundle = fuse.bundle('server').splitConfig({
         server: `build/public/${directory.js}`,
+        dest: `public/${directory.js}`,
+    });
+
+    // Client Bundle
+    clientBundle = fuse.bundle(`public/${directory.js}/bundle`).splitConfig({
+        browser: `/${directory.js}`,
         dest: `public/${directory.js}`,
     });
 
@@ -156,20 +165,21 @@ Sparky.task('build', () => {
         }
         const bundleInfo = asyncRoutes[bundleName as IAsyncRoutes];
 
-        bundle = bundle.split(bundleInfo.instructions, `${bundleName} > ${bundleInfo.entrypoint}`);
+        serverBundle = serverBundle.split(bundleInfo.instructions, `${bundleName} > ${bundleInfo.entrypoint}`);
+        clientBundle = clientBundle.split(bundleInfo.instructions, `${bundleName} > ${bundleInfo.entrypoint}`);
     }
-    bundle = bundle.split('client/**', 'bundle > client/index.tsx');
-    bundle.instructions(` > [server/index.ts] +process +[views/**/**.tsx] +[client/**.tsx]`);
+    serverBundle.instructions(` > [server/index.ts] +process +[views/**/**.tsx]`);
+    clientBundle.instructions(` > [client/index.tsx] +[views/**/**.tsx]`);
 });
 
 Sparky.task('start', () => {
     if (envVars.NODE_ENV === 'development') {
         fuse.dev({ hmr: true, httpServer: false });
-        bundle.watch('server/**');
-        bundle.hmr().watch();
+        serverBundle.watch('server/**');
+        clientBundle.hmr().watch();
     }
 
-    bundle.completed((proc) => proc.start());
+    serverBundle.completed((proc) => proc.start());
 });
 
 Sparky.task('run', () => fuse.run());

@@ -10,6 +10,8 @@ export interface IRouterState {
     lastRoute?: string;
     finishedFirstLoad?: boolean;
     oldPath?: string;
+    status?: number;
+    client?: boolean;
 }
 
 /**
@@ -20,6 +22,8 @@ export class RouterStore {
         config: { type: 'mem' },
         routes: [],
 
+        status: 200,
+        client: false,
         route: undefined,
         transitioning: true,
         lastRoute: undefined,
@@ -33,6 +37,14 @@ export class RouterStore {
             this.state = state;
         }
         this.router = new Router(this.state.routes, this.state.config);
+    }
+
+    public get status() {
+        return this.state.status;
+    }
+
+    public get client() {
+        return this.state.client;
     }
 
     public get route() {
@@ -108,6 +120,11 @@ export class RouterStore {
 
         // After initial render
         this.finishFirstLoad();
+    }
+
+    @action
+    public setStatus(status: number) {
+        this.state.status = status;
     }
 
     @action

@@ -2,7 +2,7 @@ import { lazyLoad } from 'fuse-tools';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { Component } from 'react';
-import { IAsyncRoutes } from 'routing/async';
+import bundleCache, { IAsyncRoutes } from 'routing/async';
 import { IStores } from 'stores';
 
 export interface IRouteProps {
@@ -30,32 +30,32 @@ export class Route extends Component<IRouteProps, IRouteState> {
     }
 
     public componentWillReceiveProps(nextProps: IRouteProps) {
-        if (!nextProps.asyncComponent) {
+        const { asyncComponent, path, router } = nextProps;
+        if (!asyncComponent || !this.isMatch(path, router)) {
             return;
         }
 
-        this.lazyLoad(nextProps.asyncComponent);
+        this.lazyLoad(asyncComponent);
     }
 
     public componentWillMount() {
-        if (!this.props.asyncComponent) {
+        const { asyncComponent, path, router } = this.props;
+        if (!asyncComponent || !this.isMatch(path, router)) {
             return;
         }
 
-        this.lazyLoad(this.props.asyncComponent);
+        this.lazyLoad(asyncComponent);
     }
 
     public render() {
-        const { router, component: Component, asyncComponent } = this.props;
-
-        console.log('Rendering Route');
+        const { router, path, component: Component, asyncComponent } = this.props;
 
         if (!router) {
             console.warn('No router configured');
             return null;
         }
 
-        if (!this.isMatch()) {
+        if (!this.isMatch(path, router)) {
             return null;
         }
 
@@ -80,8 +80,7 @@ export class Route extends Component<IRouteProps, IRouteState> {
         return <AsyncComponent /> || null;
     }
 
-    private isMatch() {
-        const { path, router } = this.props;
+    private isMatch(path: string | string[], router?: IStores['router']) {
         if (!router) {
             return false;
         }
@@ -114,7 +113,6 @@ export class Route extends Component<IRouteProps, IRouteState> {
             return path === router.route;
         }
 
-
         // If array of paths, dont show loading icon if the last
         // route was one we  render for. i.e. - if we are transitioning between
         // sub routes, no need to show loading icon here.
@@ -126,9 +124,22 @@ export class Route extends Component<IRouteProps, IRouteState> {
         return path.indexOf(router.route) !== -1;
     }
 
-    private async lazyLoad(bundle: IAsyncRoutes) {
-        const module = await lazyLoad(bundle);
-        console.log(`loaded bundle ${bundle}`, module);
-        this.setState({ AsyncComponent: module.default });
+    private lazyLoad(name: IAsyncRoutes) {
+        const bundle = bundleCache.getBundle(name);
+        if (bundle) {
+            this.setState({ AsyncComponent: bundle.default });
+            return;
+        }
+        this.lazyLoadAsync(name);
+    }
+
+    private async lazyLoadAsync(name: string) {
+        const { router, path } = this.props;
+        if (!router) {
+            return;
+        }
+        const bundle = await lazyLoad(name);
+        console.log(name, bundle);
+        this.setState({ AsyncComponent: bundle.default });
     }
 };

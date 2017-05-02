@@ -13,7 +13,7 @@ function notFound(stores?: IStores): RouteConfig {
         $: '*',
         enter: () => transition(
             { route: '*', stores },
-            async (s) => s.status.setStatus(404),
+            async (s) => s.router.setStatus(404),
         ),
     };
 }

@@ -38,5 +38,5 @@ export async function appMiddleware(req: Request, res: Response) {
             appString={app} />,
     );
 
-    res.status(store.domains.status.status).send(`<!DOCTYPE html>${html}`);
+    res.status(store.domains.router.status || 200).send(`<!DOCTYPE html>${html}`);
 }

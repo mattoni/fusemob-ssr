@@ -1,7 +1,6 @@
 import 'isomorphic-fetch';
 import { CurrencyStore } from './currency';
 import { RouterStore } from './router';
-import { StatusStore } from './status';
 
 export interface ISerializable {
     serialize: () => any;
@@ -13,7 +12,6 @@ export interface ISerializable {
  */
 export interface IStores {
     currency: CurrencyStore;
-    status: StatusStore;
     router: RouterStore;
     [key: string]: ISerializable;
 }
@@ -43,7 +41,6 @@ export class Store {
         // Add new state domain initializations here
         this.domains = {
             currency: new CurrencyStore(state && state.currency),
-            status: new StatusStore(state && state.status),
             router: new RouterStore(state && state.router),
         };
     }

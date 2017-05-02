@@ -8,6 +8,7 @@ const home: RouteFunc = (stores) => {
         $: route,
         enter: () => transition({
             route,
+            module: 'home',
             stores,
             nav: ['home'],
         }),

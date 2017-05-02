@@ -20,7 +20,7 @@ export class Link extends Component<ILinkProps, {}> {
         return (
             <a
                 {...others}
-                href={path}
+                href="#"
                 onClick={this.handleClick} />
         );
     }

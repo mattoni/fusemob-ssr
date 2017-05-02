@@ -6,11 +6,11 @@ const currency: RouteFunc = (stores) => {
 
     return {
         $: route,
-        enter: () => transition(
-            {
+        enter: () => transition({
                 route,
+                module: 'currency',
                 stores,
-                nav: ['currency']
+                nav: ['currency'],
             },
             (s) => s.currency.fetchRates(),
         ),

@@ -1,4 +1,3 @@
-import { lazyLoad } from 'fuse-tools';
 import { links, RouteFunc, transition } from 'routing';
 import { IStores } from 'stores';
 
@@ -9,11 +8,9 @@ const about: RouteFunc = (stores) => {
         enter: () => transition(
             {
                 route,
+                module: 'about',
                 stores,
                 nav: ['about'],
-            },
-            async () => {
-                lazyLoad('about');
             },
         ),
     };

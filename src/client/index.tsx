@@ -11,8 +11,8 @@ import './styles';
 // Use Fusebox to pull them in dynamically
 const states: IRenderedStates = require('~/rendered/state.js');
 
-if (states.stores.status) {
-    states.stores.status.client = true;
+if (states.stores.router) {
+    states.stores.router.client = true;
 }
 
 const routerState = states.stores.router;
@@ -21,6 +21,7 @@ if (routerState) {
     routerState.finishedFirstLoad = false;
     routerState.routes = Routes();
     routerState.config.type = 'browser';
+    routerState.config.disableInitialRoute = true;
 }
 
 const store = new Store(states.stores);

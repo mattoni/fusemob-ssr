@@ -34,6 +34,7 @@
         "react-dom": "^15.4.2",
         "react-helmet": "^5.0.3",
         "react-scroll": "^1.5.2",
+        "spdy": "^3.4.4",
         "tslib": "^1.6.0",
         "typestyle": "^1.2.0",
         "yester": "0.10.0-dev.12"
@@ -48,6 +49,7 @@
         "@types/react-helmet": "^5.0.1",
         "@types/react-scroll": "^0.0.31",
         "@types/rimraf": "^0.0.28",
+        "@types/spdy": "^3.4.1",
         "fuse-box": "2.0.0-beta.7",
         "fuse-box-typechecker": "git://github.com/fuse-box/fuse-box-typechecker",
         "rimraf": "^2.6.1",
