@@ -2,7 +2,7 @@ import { lazyLoad } from 'fuse-tools';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { Component } from 'react';
-import bundleCache, { IAsyncRoutes } from 'routing/async';
+import { IAsyncRoutes } from 'routing/async';
 import { IStores } from 'stores';
 
 export interface IRouteProps {
@@ -10,43 +10,15 @@ export interface IRouteProps {
     component?: React.SFC<any | void> | React.ComponentClass<any | void>;
     asyncComponent?: IAsyncRoutes;
     router?: IStores['router'];
-}
-
-// For async comps
-interface IRouteState {
-    AsyncComponent: any;
+    bundles?: IStores['bundles'];
 }
 
 @inject((stores: IStores) => ({
     router: stores.router,
+    bundles: stores.bundles,
 }))
 @observer
-export class Route extends Component<IRouteProps, IRouteState> {
-    constructor() {
-        super();
-        this.state = {
-            AsyncComponent: undefined,
-        };
-    }
-
-    public componentWillReceiveProps(nextProps: IRouteProps) {
-        const { asyncComponent, path, router } = nextProps;
-        if (!asyncComponent || !this.isMatch(path, router)) {
-            return;
-        }
-
-        this.lazyLoad(asyncComponent);
-    }
-
-    public componentWillMount() {
-        const { asyncComponent, path, router } = this.props;
-        if (!asyncComponent || !this.isMatch(path, router)) {
-            return;
-        }
-
-        this.lazyLoad(asyncComponent);
-    }
-
+export class Route extends Component<IRouteProps, {}> {
     public render() {
         const { router, path, component: Component, asyncComponent } = this.props;
 
@@ -72,12 +44,9 @@ export class Route extends Component<IRouteProps, IRouteState> {
             return null;
         }
 
-        const { AsyncComponent } = this.state;
-        if (!this.state.AsyncComponent) {
-            return null;
-        }
+        const AsyncComponent = this.getBundleFromCache(asyncComponent);
 
-        return <AsyncComponent /> || null;
+        return AsyncComponent && <AsyncComponent /> ;
     }
 
     private isMatch(path: string | string[], router?: IStores['router']) {
@@ -124,22 +93,15 @@ export class Route extends Component<IRouteProps, IRouteState> {
         return path.indexOf(router.route) !== -1;
     }
 
-    private lazyLoad(name: IAsyncRoutes) {
-        const bundle = bundleCache.getBundle(name);
+    private getBundleFromCache(name: IAsyncRoutes) {
+        const { bundles } = this.props;
+        if (!bundles) { console.warn('Bundles store not loaded'); return; }
+        const bundle = bundles.getBundle(name);
         if (bundle) {
-            this.setState({ AsyncComponent: bundle.default });
-            return;
+            return bundle.default;
         }
-        this.lazyLoadAsync(name);
-    }
 
-    private async lazyLoadAsync(name: string) {
-        const { router, path } = this.props;
-        if (!router) {
-            return;
-        }
-        const bundle = await lazyLoad(name);
-        console.log(name, bundle);
-        this.setState({ AsyncComponent: bundle.default });
+        console.warn(`Async bundle ${name} not loaded prior to render.`);
+        return null;
     }
 };

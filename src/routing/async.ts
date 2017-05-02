@@ -16,25 +16,3 @@ export const asyncRoutes = {
 };
 
 export type IAsyncRoutes = keyof typeof asyncRoutes;
-
-class BundleCache {
-    private bundles: {[key: string]: any};
-
-    constructor() {
-        this.bundles = {};
-    }
-
-    public async loadBundle(name: IAsyncRoutes) {
-        if (this.bundles[name]) {
-            return;
-        }
-
-        this.bundles[name] = await lazyLoad(name);
-    }
-
-    public getBundle(name: IAsyncRoutes) {
-        return this.bundles[name];
-    }
-}
-
-export default new BundleCache();

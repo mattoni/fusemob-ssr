@@ -1,8 +1,8 @@
-import * as React from "react";
-import { Html } from "components/html";
-import { IRenderedStates, ISerializedState } from "stores";
+import { Html } from 'components/html';
+import * as React from 'react';
+import { IRenderedStates, ISerializedState } from 'stores';
 
-const description = "A server side rendering implementation featuring fuse-box and MobX";
+const description = 'A server side rendering implementation featuring fuse-box and MobX';
 
 interface IServerHTMLProps {
     initialState: ISerializedState;
@@ -22,6 +22,11 @@ const inlineScript = (body: string) => (
 
 export function ServerHTML(props: IServerHTMLProps) {
     const { initialState, appString } = props;
+    if (initialState.router) {
+        // clear out routes
+        initialState.router.routes = [];
+        delete initialState.router.config;
+    }
     const bodyElements = [];
     const state: IRenderedStates = {
         stores: initialState,

@@ -1,4 +1,5 @@
 import 'isomorphic-fetch';
+import { BundlesStore } from './bundles';
 import { CurrencyStore } from './currency';
 import { RouterStore } from './router';
 
@@ -13,7 +14,7 @@ export interface ISerializable {
 export interface IStores {
     currency: CurrencyStore;
     router: RouterStore;
-    [key: string]: ISerializable;
+    bundles: BundlesStore;
 }
 
 /**
@@ -40,6 +41,7 @@ export class Store {
     constructor(state?: ISerializedState) {
         // Add new state domain initializations here
         this.domains = {
+            bundles: new BundlesStore(state && state.bundles),
             currency: new CurrencyStore(state && state.currency),
             router: new RouterStore(state && state.router),
         };
@@ -66,6 +68,9 @@ export class Store {
     }
 }
 
+/**
+ * Allow store to be set + accessible outside of UI
+ */
 let store: Store;
 export function useStore(s: Store) {
     store = s;

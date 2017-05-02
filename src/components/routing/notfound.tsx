@@ -4,12 +4,9 @@ import { Helmet } from 'react-helmet';
 import { IStores } from 'stores';
 
 interface INotFoundProps {
-    statusStore?: IStores['status'];
+    //
 }
 
-@inject((stores: IStores) => ({
-    statusStore: stores.status
-}))
 @observer
 export class NotFound extends React.Component<INotFoundProps, {}> {
     public render() {

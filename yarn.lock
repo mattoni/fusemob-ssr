@@ -1053,11 +1053,11 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2, inherits@2.0.1, inherits@^2.0.1, inherits@~2.0.1:
+inherits@2, inherits@2.0.1, inherits@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
 
-inherits@2.0.3, inherits@~2.0.0:
+inherits@2.0.3, inherits@~2.0.0, inherits@~2.0.1:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
 
@@ -2421,9 +2421,9 @@ yargs@~3.10.0:
     decamelize "^1.0.0"
     window-size "0.1.0"
 
-yester@0.10.0-dev.12:
-  version "0.10.0-dev.12"
-  resolved "https://registry.yarnpkg.com/yester/-/yester-0.10.0-dev.12.tgz#307f597d95af7c8e8b5eab33e209e06283b2d60a"
+yester@0.10.0-dev.13:
+  version "0.10.0-dev.13"
+  resolved "https://registry.yarnpkg.com/yester/-/yester-0.10.0-dev.13.tgz#b4a173ee134a81beb39cbd12c552ca6f54843bd7"
   dependencies:
     history "^4.6.1"
 

@@ -13,15 +13,17 @@ import { ServerHTML } from './server-html';
 
 // Configure mobx for rendering on the server
 useStaticRendering(true);
-initStyles();
 
 export async function appMiddleware(req: Request, res: Response) {
+    initStyles();
+
     const store = new Store();
 
     const routeConfig: IRouterState = {
         routes: Routes(store.domains),
         config: {type: 'mem'},
     };
+
     const router = new RouterStore(routeConfig);
     store.useStores({router});
     await store.domains.router.init(req.path);

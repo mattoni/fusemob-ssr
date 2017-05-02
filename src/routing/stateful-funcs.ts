@@ -1,6 +1,6 @@
 import { runInAction } from 'mobx';
 import * as Scroll from 'react-scroll';
-import bundleCache, { IAsyncRoutes } from 'routing/async';
+import { IAsyncRoutes } from 'routing/async';
 import { getStore, IStores } from 'stores';
 
 interface ITransitionOptions {
@@ -35,8 +35,8 @@ export async function transition(options: ITransitionOptions, ...cb: TransitionF
         ...cb.map((c) => c(stores)),
     ];
 
-    if (!router.client && options.module) {
-        promises.push(bundleCache.loadBundle(options.module));
+    if (options.module) {
+        promises.push(stores.bundles.loadBundle(options.module));
     }
 
     await Promise.all(promises);
