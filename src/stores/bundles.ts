@@ -23,6 +23,10 @@ export class BundlesStore {
         this.state.bundles[name] = await lazyLoad(name);
     }
 
+    /**
+     * Reads the packaged response from the server
+     * and loads in bundles that were async loaded on server
+     */
     public async preloadBundlesFromServer() {
         const promises = [];
         // tslint:disable-next-line:forin
