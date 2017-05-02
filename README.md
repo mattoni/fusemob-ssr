@@ -1,7 +1,7 @@
 # FuseMob SSR
-## The fastest way to develop modern server side rendered apps
+## Full stack Typescript native web apps
 
-Utilizing the blazing bundling speed of FuseBox, this starter kit will have you off the ground in no time building modern web apps.
+Utilizing the blazing bundling speed of FuseBox, this starter kit will have you off the ground in no time building modern web apps with libraries that work seamlessly with Typescript.
 
 ## Toolset
 
@@ -9,7 +9,8 @@ Utilizing the blazing bundling speed of FuseBox, this starter kit will have you 
 - [Typescript 2](https://typescriptlang.org)
 - [React](https://github.com/facebook/react) & [React DOM](https://github.com/facebook/react) for views
 - [MobX](https://github.com/mobxjs/mobx) & [MobX-React](https://github.com/mobxjs/mobx-react) for state management 
- 
+- [Yester](https://github.com/basarat/yester) for routing 
+
 #### Utilities
 - [React Helmet](https://github.com/nfl/react-helmet) for managing the head tag
 - [TypeStyle, CSX, and CSSTips](http://typestyle.io/) for CSS in JS styling
@@ -36,5 +37,5 @@ $ git clone https://github.com/mattoni/fusemob-ssr
 ## Usage
 ```bash
 # Running
-$ npm start # starts the app in development mode
+$ yarn start # starts the app in development mode
 ```

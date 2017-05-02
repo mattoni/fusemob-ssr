@@ -1,16 +1,18 @@
-import * as React from "react";
-import { getStyles } from "typestyle";
+import * as React from 'react';
+import { getStyles } from 'typestyle';
 
 
 interface IHtmlProps {
     description: string;
     appString: string;
     bodyElements: JSX.Element[];
+    bundle?: JSX.Element;
+    vendor?: JSX.Element;
 }
 
 export class Html extends React.Component<IHtmlProps, undefined> {
     public render() {
-        const { appString, bodyElements } = this.props;
+        const { appString, bodyElements, bundle, vendor } = this.props;
 
         // Pass generated styles to client
         const styles = (
@@ -30,9 +32,9 @@ export class Html extends React.Component<IHtmlProps, undefined> {
                 </head>
                 <body>
                     <main id="app" dangerouslySetInnerHTML={{ __html: appString }} />
-                    <script src="js/vendor.js" />
+                    {vendor ? vendor : null}
                     {bodyElements}
-                    <script src="js/bundle.js" />
+                    {bundle ? bundle : null}
                 </body>
             </html>
         );

@@ -1,44 +1,50 @@
-// import { setStatefulModules } from "fuse-box/modules/fuse-hmr";
-import { Provider } from "mobx-react";
-import * as React from "react";
-import asyncBootstrapper from "react-async-bootstrapper";
-import { AsyncComponentProvider, createAsyncContext } from "react-async-component";
-import * as ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
-import { App } from "../containers/App";
-import { IRenderedStates, Store } from "../stores";
-import { WorkState } from "../utils/work";
-import "./styles";
+// tslint:disable-next-line:no-unused-variable
+import { Provider } from 'mobx-react';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { Routes } from 'routing';
+import { IRenderedStates, Store, useStore } from 'stores';
+import { AppContainer } from 'views';
+import './styles';
 
 // These are the vars we stashed on the window
+// Use Fusebox to pull them in dynamically
+const states: IRenderedStates = require('~/rendered/state.js');
 
-const states: IRenderedStates = require("~/rendered/states.js");
+if (states.stores.router) {
+    states.stores.router.client = true;
+}
+
+const routerState = states.stores.router;
+
+if (routerState) {
+    routerState.finishedFirstLoad = false;
+    routerState.routes = Routes();
+    routerState.config.type = 'browser';
+    routerState.config.disableInitialRoute = true;
+}
 
 const store = new Store(states.stores);
-const asyncContext = createAsyncContext();
+useStore(store);
 
-WorkState.load(states.asyncWork);
+store.domains.router.init();
 
 async function renderApp() {
-
     const app = (
-        <BrowserRouter>
-            <Provider {...store.domains}>
-                <AsyncComponentProvider asyncContext={asyncContext} rehydrateState={states.asyncComponents}>
-                    <App />
-                </AsyncComponentProvider>
-            </Provider>
-        </BrowserRouter>
+        <Provider {...store.domains}>
+            <AppContainer />
+        </Provider>
     );
 
-    await asyncBootstrapper(app);
-    ReactDOM.render(app, document.getElementById("app"));
+    ReactDOM.render(app, document.getElementById('app'));
 }
 
 renderApp();
 
-// setStatefulModules((name) => {
-//   // Add the things you think are stateful:
-//   console.log(name, /stores/.test(name) || /client\/index/.test(name));
-//   return /stores/.test(name) || /client\/index/.test(name);
-// });
+// Custom HMR, will forcefully reload if you edit a store file or
+// one listed under fullPaths - Keeps state in sync
+import { setStatefulModules } from 'fuse-box/modules/fuse-hmr';
+
+setStatefulModules((name) => {
+    return /stores/.test(name) || /client\/index/.test(name);
+});

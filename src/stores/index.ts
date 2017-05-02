@@ -1,11 +1,19 @@
-import "isomorphic-fetch";
-import { CurrencyStore } from "./currency";
+import 'isomorphic-fetch';
+import { CurrencyStore } from './currency';
+import { RouterStore } from './router';
+
+export interface ISerializable {
+    serialize: () => any;
+    state: any;
+}
+
 /**
  * Available stores. Add new store definitions here
  */
 export interface IStores {
     currency: CurrencyStore;
-    [key: string]: {serialize: () => void, state: any};
+    router: RouterStore;
+    [key: string]: ISerializable;
 }
 
 /**
@@ -13,15 +21,13 @@ export interface IStores {
  * No need to modify this.
  */
 export type ISerializedState = {
-    [P in keyof IStores]?: IStores[P]["state"];
+    [P in keyof IStores]?: IStores[P]['state'];
 };
 
 /**
  * State sent to the browser
  */
 export interface IRenderedStates {
-    asyncComponents: {};
-    asyncWork: {};
     stores: ISerializedState;
 }
 
@@ -35,15 +41,36 @@ export class Store {
         // Add new state domain initializations here
         this.domains = {
             currency: new CurrencyStore(state && state.currency),
+            router: new RouterStore(state && state.router),
         };
+    }
+
+    public useStores(stores: Partial<IStores>) {
+        // tslint:disable-next-line:forin
+        for (const key in stores) {
+            const store = stores[key];
+            if (store) {
+                this.domains[key] = store;
+            }
+        }
     }
 
     public serialize() {
         const serialized: ISerializedState = {};
+        // tslint:disable-next-line:forin
         for (const i in this.domains) {
             serialized[i] = this.domains[i].serialize();
         }
 
         return serialized;
     }
+}
+
+let store: Store;
+export function useStore(s: Store) {
+    store = s;
+}
+
+export function getStore() {
+    return store;
 }

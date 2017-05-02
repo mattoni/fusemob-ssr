@@ -1,36 +1,28 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "*": [
-                "src/*"
-            ],
-            "lazy": [
-                "lazy.ts"
-            ]
-        },
-        "outDir": "build",
         "module": "commonjs",
-        "target": "es6",
-        "sourceMap": true,
-        "inlineSourceMap": false,
-        "inlineSources": false,
-        "experimentalDecorators": true,
-        "importHelpers": true,
-        "noUnusedParameters": true,
-        "noUnusedLocals": true,
-        "jsx": "react",
-        "moduleResolution": "node",
+        "target": "es5",
+        "outDir": "build",
         "noImplicitAny": true,
         "noImplicitReturns": true,
-        "noImplicitThis": true,
         "strictNullChecks": true,
+        "sourceMap": true,
         "pretty": true,
-        "typeRoots": [
-            "./typings"
+        "removeComments": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "experimentalDecorators": true,
+        "baseUrl": "./src",
+        "moduleResolution": "node",
+        "jsx": "react",
+        "noEmitHelpers": true,
+        "importHelpers": true,
+        "lib": [
+            "dom",
+            "es6"
         ]
     },
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "fuse.ts"
     ]
 }

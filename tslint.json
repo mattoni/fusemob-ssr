@@ -10,23 +10,18 @@
         ],
         "quotemark": [
             true,
-            "double",
+            "single",
             "jsx-double"
         ],
         "no-var-requires": false,
-        "no-console": [
-            "assert"
-        ],
         "object-literal-key-quotes": false,
         "member-ordering": [
             false
         ],
-        "forin": false,
         "object-literal-sort-keys": false,
         "jsx-alignment": [
             false
         ],
-        "jsx-wrap-multiline": true,
-        "jsx-boolean-value": false
+        "jsx-wrap-multiline": true
     }
 }
