@@ -67,3 +67,13 @@ spdy.createServer(options, app as any).listen(port, (err: any) => {
         ));
     }
 });
+
+process.on('SIGINT', () => {
+    console.info('Captured SIGINT! Exiting.');
+    process.exit();
+});
+
+process.on('SIGTERM', () => {
+    console.info('Captured SIGTERM. Exiting.');
+    process.exit();
+});

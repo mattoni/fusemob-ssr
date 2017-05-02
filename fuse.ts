@@ -172,6 +172,7 @@ Sparky.task('build', () => {
         serverBundle = serverBundle.split(bundleInfo.instructions, `${bundleName} > ${bundleInfo.entrypoint}`);
         clientBundle = clientBundle.split(bundleInfo.instructions, `${bundleName} > ${bundleInfo.entrypoint}`);
     }
+
     serverBundle.instructions(` > [server/index.ts] +process +[views/**/**.tsx]`);
     clientBundle.instructions(` > [client/index.tsx] +[views/**/**.tsx]`);
 });
@@ -186,4 +187,14 @@ Sparky.task('start', () => {
     serverBundle.completed((proc) => proc.start());
 });
 
-Sparky.task('run', () => fuse.run());
+Sparky.task('run', async () => {
+    const producer = await fuse.run();
+    const bundle = producer.bundles.get(`public/${directory.js}/bundle`);
+    const vendor = producer.bundles.get(`public/${directory.js}/vendor`);
+    const bundles = {
+        bundle: bundle!.context.output.lastGeneratedFileName,
+        vendor: vendor!.context.output.lastGeneratedFileName,
+    };
+    const outputDir = path.join(__dirname, directory.outFolder);
+    fs.writeFileSync(path.join(outputDir, 'bundles.json'), JSON.stringify(bundles));
+});

@@ -6,8 +6,8 @@ interface IHtmlProps {
     description: string;
     appString: string;
     bodyElements: JSX.Element[];
-    bundle?: JSX.Element;
-    vendor?: JSX.Element;
+    bundle?: string;
+    vendor?: string;
 }
 
 export class Html extends React.Component<IHtmlProps, undefined> {
@@ -32,9 +32,9 @@ export class Html extends React.Component<IHtmlProps, undefined> {
                 </head>
                 <body>
                     <main id="app" dangerouslySetInnerHTML={{ __html: appString }} />
-                    {vendor ? vendor : null}
+                    {vendor ? <script src={vendor} /> : null}
                     {bodyElements}
-                    {bundle ? bundle : null}
+                    {bundle ? <script src={bundle} /> : null}
                 </body>
             </html>
         );
