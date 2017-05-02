@@ -91,7 +91,7 @@ Sparky.task('options', () => {
         hash: envVars.NODE_ENV === 'production',
         plugins: [
             TypeCheckPlugin({
-                bundles: ['ssr'],
+                bundles: ['server'],
                 quit: envVars.NODE_ENV === 'production',
             }),
             [
