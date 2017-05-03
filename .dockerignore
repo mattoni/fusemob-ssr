@@ -1,3 +1,9 @@
 .fusebox/
 build/
 node_modules/
+.dockerignore
+.gitignore
+Dockerfile
+LICENSE
+README.md
+tslint.json
