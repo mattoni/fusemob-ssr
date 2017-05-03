@@ -1,5 +1,6 @@
 // tslint:disable-next-line:no-unused-variable
 import { Provider } from 'mobx-react';
+import 'plugins/hmr';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Routes } from 'routing';
@@ -7,7 +8,6 @@ import { IRenderedStates, Store, useStore } from 'stores';
 import { setStylesTarget } from 'typestyle';
 import { initStyles } from 'utils/styles';
 import { AppContainer } from 'views';
-
 
 // These are the vars we stashed on the window
 // Use Fusebox to pull them in dynamically
