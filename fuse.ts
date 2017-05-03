@@ -1,9 +1,6 @@
 import * as fs from 'fs';
 import {
     CopyPlugin,
-    CSSModules,
-    CSSPlugin,
-    CSSResourcePlugin,
     EnvPlugin,
     FuseBox,
     JSONPlugin,
@@ -99,31 +96,6 @@ Sparky.task('options', () => {
                     macros: { '~': `${directory.homeDir}/` },
                     importer: true,
                     cache: envVars.NODE_ENV !== 'production',
-                }),
-                CSSResourcePlugin({
-                    dist: `${directory.outFolder}/assets/images`,
-                    resolve: (f) => `/assets/images/${f}`,
-                }),
-                CSSModules(),
-
-                CSSPlugin({
-                    group: 'css/bundle.css',
-                    outFile: `${directory.outFolder}/public/css/bundle.css` as any,
-                    inject: false,
-                    minify: envVars.NODE_ENV === 'production',
-                }),
-            ],
-            [
-                CSSModules(),
-                CSSResourcePlugin({
-                    dist: `${directory.outFolder}/assets/images`,
-                    resolve: (f) => `/assets/images/${f}`,
-                }),
-                CSSPlugin({
-                    group: 'css/bundle.css',
-                    outFile: `${directory.outFolder}/public/css/bundle.css`,
-                    inject: false,
-                    minify: envVars.NODE_ENV === 'production',
                 }),
             ],
             JSONPlugin(),
