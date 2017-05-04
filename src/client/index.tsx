@@ -4,32 +4,42 @@ import 'plugins/hmr';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Routes } from 'routing';
-import { IRenderedStates, Store, useStore } from 'stores';
+import { getStore, IRenderedStates, Store, useStore } from 'stores';
 import { setStylesTarget } from 'typestyle';
 import { initStyles } from 'utils/styles';
 import { AppContainer } from 'views';
 
-// These are the vars we stashed on the window
-// Use Fusebox to pull them in dynamically
-const states: IRenderedStates = require('~/rendered/state.js');
+function initStores() {
+    // These are the vars we stashed on the window
+    // Use Fusebox to pull them in dynamically
+    const states: IRenderedStates = require('~/rendered/state.js');
 
-if (states.stores.router) {
-    states.stores.router.client = true;
+    if (states.stores.router) {
+        states.stores.router.client = true;
+    }
+
+    const routerState = states.stores.router;
+
+    if (routerState) {
+        routerState.finishedFirstLoad = false;
+        routerState.routes = Routes();
+        routerState.config = { type: 'browser' };
+        routerState.config.disableInitialRoute = true;
+    }
+
+    const store = new Store(states.stores);
+    useStore(store);
+
+    store.domains.router.init();
+
+    return store;
 }
 
-const routerState = states.stores.router;
+let store = getStore();
 
-if (routerState) {
-    routerState.finishedFirstLoad = false;
-    routerState.routes = Routes();
-    routerState.config = { type: 'browser' };
-    routerState.config.disableInitialRoute = true;
+if (!store) {
+    store = initStores();
 }
-
-const store = new Store(states.stores);
-useStore(store);
-
-store.domains.router.init();
 
 initStyles();
 
@@ -58,5 +68,5 @@ renderApp();
 import { setStatefulModules } from 'fuse-box/modules/fuse-hmr';
 
 setStatefulModules((name) => {
-    return /stores/.test(name) || /client\/index/.test(name);
+    return /stores/.test(name) || /client\/index/.test(name) || /rendered\/state/.test(name);
 });
