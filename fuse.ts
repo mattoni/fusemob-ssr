@@ -4,7 +4,6 @@ import {
     EnvPlugin,
     FuseBox,
     JSONPlugin,
-    SassPlugin,
     Sparky,
     UglifyJSPlugin,
 } from 'fuse-box';
@@ -82,6 +81,7 @@ Sparky.task('options', () => {
             stores: '~/stores',
             utils: '~/utils',
             views: '~/views',
+            plugins: '~/plugins',
             assets: './assets',
         },
         cache: envVars.NODE_ENV !== 'production',
@@ -91,13 +91,6 @@ Sparky.task('options', () => {
                 bundles: ['server'],
                 quit: envVars.NODE_ENV === 'production',
             }),
-            [
-                SassPlugin({
-                    macros: { '~': `${directory.homeDir}/` },
-                    importer: true,
-                    cache: envVars.NODE_ENV !== 'production',
-                }),
-            ],
             JSONPlugin(),
             CopyPlugin({
                 files: ['*.jpg', '*.svg', '*.png', '*.ico'],
