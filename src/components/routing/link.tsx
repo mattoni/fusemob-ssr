@@ -26,7 +26,7 @@ export class Link extends Component<ILinkProps, {}> {
     }
 
     private handleClick = (e: React.MouseEvent<any>) => {
-        const { path, router, replace, onClick, ...others } = this.props;
+        const { path, router, replace, onClick } = this.props;
 
         if (onClick) {
             onClick(e);

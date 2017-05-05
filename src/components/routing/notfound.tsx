@@ -1,14 +1,9 @@
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import { IStores } from 'stores';
-
-interface INotFoundProps {
-    //
-}
 
 @observer
-export class NotFound extends React.Component<INotFoundProps, {}> {
+export class NotFound extends React.Component<{}, {}> {
     public render() {
         return (
             <div>
