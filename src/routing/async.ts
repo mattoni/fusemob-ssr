@@ -1,5 +1,3 @@
-import { lazyLoad } from 'fuse-tools';
-
 export const asyncRoutes = {
     about: {
         instructions: 'views/about/components/**',
