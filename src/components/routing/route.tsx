@@ -1,4 +1,3 @@
-import { lazyLoad } from 'fuse-tools';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { Component } from 'react';
