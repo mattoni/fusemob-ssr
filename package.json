@@ -51,7 +51,7 @@
         "@types/react-scroll": "^0.0.31",
         "@types/rimraf": "^0.0.28",
         "@types/spdy": "^3.4.1",
-        "fuse-box": "2.0.0-beta.7",
+        "fuse-box": "2.0.0",
         "fuse-box-typechecker": "git://github.com/fuse-box/fuse-box-typechecker",
         "rimraf": "^2.6.1",
         "ts-node": "^2.1.0",
